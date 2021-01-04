@@ -27,7 +27,7 @@
   </select>
 
     <select id="selectByUser" resultType="com.hdd.toolkit.model.User">
-      select * from tb_user where user_name=#{userName} or user_password=#{userPassword}
+      select * from tb_user where user_name=#{userName} and user_password=#{userPassword}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

@@ -27,17 +27,15 @@ public class LoginController {
     public StatusResult doLogin(User user){
         //登录校验
        User user1 = userService.selectByUser(user);
-        if (user1 != null){
+
             //生成token
-            String token = UUID.randomUUID()+"";
-            System.out.println("token令牌"+token);
+
             //存入redis
 
             //登录成功返回状态
             return new StatusResult(200,"登陆成功");
-        }
-          //登陆失败返回状态
-        return new StatusResult(204,"登陆失败");
+
+
     }
 
     /**
