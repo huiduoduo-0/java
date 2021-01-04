@@ -19,7 +19,7 @@
         <mysql.version>5.1.47</mysql.version>
         <pool2.version>2.4.2</pool2.version>
         <mybatis.version>3.5.6</mybatis.version>
-        <lombok.version>1.14.8</lombok.version>
+        <lombok.version>1.18.10</lombok.version>
     </properties>
 
     <dependencies>
@@ -34,28 +34,28 @@
             <scope>test</scope>
         </dependency>
 
-        <!--shiro-->
+        <!--shiro认证授权 盐值-->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring-boot-starter</artifactId>
             <version>1.5.3</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
+        <!-- spring-boot-starter-data-redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
             <version>2.3.4.RELEASE</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-pool2 连接池-->
+        <!-- redis连接池-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
             <version>${pool2.version}</version>
         </dependency>
 
-        <!-- commons -->
+        <!-- commons链接池 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -68,7 +68,7 @@
             <version>${mysql.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+        <!-- mybatis -->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
@@ -83,7 +83,7 @@
 
 
                      <!--lombok：实体类生成get、set、tostring等方法-->
-        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -107,13 +107,7 @@
             <version>1.4.7</version>
         </dependency>
 
-        <!-- commons -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
+        <!--jwt -->
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
