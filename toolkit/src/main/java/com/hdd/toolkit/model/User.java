@@ -57,11 +57,6 @@ public class User implements Serializable {
     private String tel;
 
     /**
-     * 盐值（密码机密）
-     */
-    private String salt;
-
-    /**
      * 区号
      */
     private String areaCode;
