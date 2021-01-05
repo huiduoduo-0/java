@@ -108,4 +108,5 @@ public class RandomValidateCode {
             e.printStackTrace();
         }
     }
+
 }

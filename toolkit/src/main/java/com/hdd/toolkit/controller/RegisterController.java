@@ -12,7 +12,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 /**
  * 注册
@@ -40,7 +39,7 @@ public class RegisterController {
         response.setDateHeader("Expire", 0);
         RandomValidateCode randomValidateCode = new RandomValidateCode();
         try {
-            randomValidateCode.getRandcode(request, response);// 输出图片方法
+            randomValidateCode.getValidateCode(request, response);// 输出图片方法
         } catch (Exception e) {
             e.printStackTrace();
         }
