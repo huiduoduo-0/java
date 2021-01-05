@@ -14,13 +14,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User selectByUser(User user) {
-        //根据用户名和密码查询
+        //登录逻辑的根据用户名和密码查询
         User userDB = userMapper.selectByUser(user);
         if (userDB != null){
             return  userDB;
         }
     throw new RuntimeException("认证失败");
     }
+
+    //注册逻辑的根据用户名查询
+    public User selectByUserName(User user) {
+
+        return userMapper.selectByUserName(user);
+    }
+
 
     @Override
     public int insert(User user) {

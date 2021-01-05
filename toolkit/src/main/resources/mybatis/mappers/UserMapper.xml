@@ -25,9 +25,13 @@
     from tb_user
     where id = #{id,jdbcType=BIGINT}
   </select>
-
+<!--登录查询用户名和密码-->
     <select id="selectByUser" resultType="com.hdd.toolkit.model.User">
       select * from tb_user where user_name=#{userName} and user_password=#{userPassword}
+    </select>
+<!--注册 根据用户名查重-->
+  <select id="selectByUserName" resultType="com.hdd.toolkit.model.User">
+      select * from tb_user where user_name=#{userName}
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

@@ -1,10 +1,10 @@
 package com.hdd.toolkit.model;
 
-import java.io.Serializable;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * tb_user
@@ -18,6 +18,11 @@ public class User implements Serializable {
      * 主键id
      */
     private Long id;
+
+    /**
+     * 验证码
+     */
+    private String code;
 
     /**
      * 用户名

@@ -4,9 +4,7 @@ import com.hdd.toolkit.model.StatusResult;
 import com.hdd.toolkit.model.User;
 import com.hdd.toolkit.service.UserService;
 import com.hdd.toolkit.utils.RandomValidateCode;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -49,28 +47,10 @@ public class RegisterController {
      * 执行注册方法
      * @return
      */
-    @RequestMapping("/go")
-    public StatusResult doRegister(HttpSession session, User user, String repassword, String code){
+    @RequestMapping(value = "/go",method = RequestMethod.POST)
+    public StatusResult doRegister(HttpSession session, @RequestBody User user){
         //注册校验
-        if (user.getUserName() == null || user.getUserName() == ""){
-            return new StatusResult(404,"用户名不能为空");
-        }
-        if (user.getUserPassword() == null || user.getUserPassword() == ""){
-            return new StatusResult(404,"密码不能为空");
-        }
-        if (repassword == null || repassword == ""){
-            return new StatusResult(404,"重复密码不能为空");
-        }
-        if (user.getEmail() == null || user.getEmail() == ""){
-            return new StatusResult(404,"邮箱不能为空");
-        }
-        if (user.getTel() == null || user.getTel() == ""){
-            return new StatusResult(404,"电话不能为空");
-        }
-        if (code == null || code == ""){
-            return new StatusResult(404,"验证码不能为空");
-        }
-        User user1 = userService.selectByUser(user);
+        User user1 = userService.selectByUserName(user);
         if (user1!=null){
             return new StatusResult(404,"该用户名已存在");
         }
@@ -85,19 +65,14 @@ public class RegisterController {
             return new StatusResult(404,"请输入11位手机号");
         }
         String code1 = (String) session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
-        if (!code.equalsIgnoreCase(code1)){
+        if (!user.getCode().equalsIgnoreCase(code1)){
             return new StatusResult(404,"验证码不正确");
-        }
-        if (!repassword.equals(user.getUserPassword())){
-            return new StatusResult(404,"确认密码与密码不一致");
         }
         User user2 = new User();
         user2.setUserName(user.getUserName());
         user2.setUserPassword(user.getUserPassword());
         user2.setEmail(user.getEmail());
         user2.setTel(user.getTel());
-        //注册失败返回状态
-
         //注册成功返回状态
         userService.insert(user2);
         return new StatusResult(200,"注册成功");
