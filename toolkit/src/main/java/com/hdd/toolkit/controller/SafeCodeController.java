@@ -1,23 +1,24 @@
-package com.hdd.toolkit.utils;
+package com.hdd.toolkit.controller;
 
-import org.springframework.stereotype.Component;
+
+import com.hdd.toolkit.utils.RandomValidateCode;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Component
+@RestController
 @RequestMapping("/code")
-public class SafeCode {
+public class SafeCodeController {
     /**
      * 验证码
      *
      * @param request
      * @param response
      */
-    @ResponseBody
     @RequestMapping(value = "/img",method = RequestMethod.GET)
     public void image(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("image/jpeg");// 设置相应类型,告诉浏览器输出的内容为图片

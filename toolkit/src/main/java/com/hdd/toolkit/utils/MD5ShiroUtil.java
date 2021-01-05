@@ -30,7 +30,6 @@ public class MD5ShiroUtil {
         //加密方式，用SimpleHash类获取加密密码时需要用到，用Md5Hash获取则不用指定
 //      String algorithmName = "MD5";
         String salt_value = user.getSalt();
-        user.setSalt(salt_value);
         //设置加盐方式(一般用用户名来加盐)
         Object salt = ByteSource.Util.bytes(salt_value);
         //加密多少次
@@ -43,9 +42,5 @@ public class MD5ShiroUtil {
         return md5Hash.toString();
     }
 
-    public static void main(String[] args) {
-        User user = new User();
-        user.setUserPassword("123456");
-        System.out.println(MD5ShiroUtil.getMd5(user));
-    }
+
 }
