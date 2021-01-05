@@ -21,4 +21,9 @@ public class UserServiceImpl implements UserService {
         }
     throw new RuntimeException("认证失败");
     }
+
+    @Override
+    public int insert(User user) {
+        return userMapper.insert(user);
+    }
 }
