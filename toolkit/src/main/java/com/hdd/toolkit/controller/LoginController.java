@@ -20,10 +20,6 @@ import java.util.concurrent.TimeUnit;
 public class LoginController {
     @Resource
     UserService userService;
-    @Resource
-    RedisTemplate redisTemplate;
-
-    Map<String,Object> map = new HashMap<>();
 
     /**
      * 执行登录方法
@@ -31,23 +27,8 @@ public class LoginController {
      */
     @PostMapping("/go")
     public StatusResult<Map> doLogin(@RequestBody User user){
-        //登录校验
-        try {
-            User userDB = userService.selectByUser(user);
-            Map<String, String> payload = new HashMap<>();
-            payload.put("id", userDB.getId().toString());
-            payload.put("userName", userDB.getUserName());
-            //生成token
-            String token = JwtUtil.getToken(payload);
-            map.put("token",token);
-            //存入redis
-            redisTemplate.opsForValue().set("token",token,7, TimeUnit.DAYS);
-            //登录成功返回状态
-            return new StatusResult<Map>(200,"登陆成功",map);
-        }catch (Exception e){
 
-        }
-        return new StatusResult<Map>(500,"登录失败");
+        return userService.selectByUser(user);
     }
 
     /**
