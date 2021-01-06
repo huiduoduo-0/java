@@ -36,8 +36,20 @@
     <include refid="Base_Column_List" />
        from tb_user where user_name=#{userName}
     </select>
+<!--  注册  根据电话查重-->
+  <select id="selectTel" resultType="com.hdd.toolkit.model.User">
+    select
+    <include refid="Base_Column_List" />
+    from tb_user where tel=#{tel}
+  </select>
+<!--  根据邮箱查重-->
+  <select id="selectEmail" resultType="com.hdd.toolkit.model.User">
+    select
+    <include refid="Base_Column_List" />
+    from tb_user where email=#{email}
+  </select>
 
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tb_user
     where id = #{id,jdbcType=BIGINT}
   </delete>

@@ -65,6 +65,14 @@ public class UserServiceImpl implements UserService {
         if (user1!=null){
             return new StatusResult(404,"该用户名已存在");
         }
+        User user3 = userMapper.selectTel(user);
+        if (user3!=null){
+            return new StatusResult(404,"该手机号已存在");
+        }
+        User user4 = userMapper.selectEmail(user);
+        if (user4!=null){
+            return new StatusResult(404,"该邮箱已存在");
+        }
         // 密码正则表达式
         String passwordpatter = "[0-9a-zA-Z]{6,20}";
         if (user.getUserPassword().matches(passwordpatter) == false){
