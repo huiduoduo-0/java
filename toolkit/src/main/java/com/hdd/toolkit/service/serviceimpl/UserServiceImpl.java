@@ -118,20 +118,10 @@ public class UserServiceImpl implements UserService {
         if (!user.getCode().equalsIgnoreCase(code1)){
             return new StatusResult<Map>(404,"验证码不正确");
         }
-//        if (!user.getUserName().equals(user1.getUserName())){
-//            return new StatusResult<Map>(404,"用户名不正确");
-//        }
-//        if (!user.getTel().equals(user1.getTel())){
-//            return new StatusResult<Map>(404,"手机号不正确");
-//        }
-//        String code1 = (String) session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
-//        if (!user.getCode().equalsIgnoreCase(code1)){
-//            return new StatusResult<Map>(404,"验证码不正确");
-//        }
-//        String passwordpatter = "[0-9a-zA-Z]{6,20}";
-//        if (user.getUserPassword().matches(passwordpatter) == false){
-//            return new StatusResult<Map>(404,"密码格式不正确");
-//        }
+        String passwordpatter = "[0-9a-zA-Z]{6,20}";
+        if (user.getUserPassword().matches(passwordpatter) == false){
+            return new StatusResult<Map>(404,"密码格式不正确");
+        }
         user1.setUserPassword(user.getUserPassword());
         //成功修改密码
         userMapper.updateByUsername(user1);
