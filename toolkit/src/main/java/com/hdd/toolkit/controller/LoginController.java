@@ -36,15 +36,9 @@ public class LoginController {
      * @return
      */
     @PutMapping("/modify")
-    public StatusResult forget(User user){
-        //根据id查找用户
-
-        //修改密码
-
-        //修改失败返回状态
-
-        //修改密码成功返回状态
-        return new StatusResult(200,"修改成功");
+    public StatusResult<Map> forget(@RequestBody User user){
+        System.out.println("user"+user);
+        return userService.forget(user);
     }
 
 }

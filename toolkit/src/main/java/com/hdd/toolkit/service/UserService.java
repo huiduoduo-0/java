@@ -10,5 +10,6 @@ public interface UserService {
 
     int insert(User user);
 
+    StatusResult forget(User user);
 
 }

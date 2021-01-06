@@ -95,11 +95,48 @@ public class UserServiceImpl implements UserService {
         return new StatusResult(200,"注册成功");
     }
 
-
-
-
     @Override
     public int insert(User user) {
         return userMapper.insert(user);
     }
+
+    /**
+     * 忘记密码执行逻辑
+     * @param user
+     * @return
+     */
+    @Override
+    public StatusResult<Map> forget(User user) {
+        User user1 = userMapper.selectByUserName(user);
+        if (user1==null){
+            return new StatusResult<Map>(404,"用户名不正确");
+        }else
+        if (!user1.getTel().equals(user.getTel())){
+            return new StatusResult<Map>(404,"手机号不正确");
+        }
+        String code1 = (String) session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
+        if (!user.getCode().equalsIgnoreCase(code1)){
+            return new StatusResult<Map>(404,"验证码不正确");
+        }
+//        if (!user.getUserName().equals(user1.getUserName())){
+//            return new StatusResult<Map>(404,"用户名不正确");
+//        }
+//        if (!user.getTel().equals(user1.getTel())){
+//            return new StatusResult<Map>(404,"手机号不正确");
+//        }
+//        String code1 = (String) session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
+//        if (!user.getCode().equalsIgnoreCase(code1)){
+//            return new StatusResult<Map>(404,"验证码不正确");
+//        }
+//        String passwordpatter = "[0-9a-zA-Z]{6,20}";
+//        if (user.getUserPassword().matches(passwordpatter) == false){
+//            return new StatusResult<Map>(404,"密码格式不正确");
+//        }
+        user1.setUserPassword(user.getUserPassword());
+        //成功修改密码
+        userMapper.updateByUsername(user1);
+        return new StatusResult<Map>(200,"忘记密码执行成功");
+
+    }
+
 }

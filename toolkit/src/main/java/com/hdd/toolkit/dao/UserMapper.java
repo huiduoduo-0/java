@@ -21,4 +21,6 @@ public interface UserMapper {
 
     User selectByUserName(User user);
 
+    int updateByUsername(User user);
+
 }
