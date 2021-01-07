@@ -99,9 +99,6 @@ public class UserServiceImpl implements UserService {
         return new StatusResult(200,"注册成功");
     }
 
-
-
-
     @Override
     public int insert(User user) {
         return userMapper.insert(user);
@@ -136,5 +133,34 @@ public class UserServiceImpl implements UserService {
         return new StatusResult<Map>(200,"忘记密码执行成功");
 
     }
+
+    //用户名查重
+    @Override
+    public boolean selectName(User user) {
+        User user1 = userMapper.selectByUserName(user);
+        if (user1!=null){
+            return false;
+        }
+        return true;
+    }
+//电话查重
+    @Override
+    public boolean selectTel(User user) {
+        User user1 = userMapper.selectTel(user);
+        if (user1!=null){
+            return false;
+        }
+        return true;
+    }
+//邮箱查重
+    @Override
+    public boolean selectEmail(User user) {
+        User user1 = userMapper.selectEmail(user);
+        if (user1!=null){
+            return false;
+        }
+        return true;
+    }
+
 
 }

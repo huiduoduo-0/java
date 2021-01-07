@@ -10,6 +10,14 @@ public interface UserService {
 
     int insert(User user);
 
+    //忘记密码
     StatusResult forget(User user);
+
+    //前台 用户名查重
+    boolean selectName(User user);
+    //前台 电话查重
+    boolean selectTel(User user);
+    //前台 邮箱查重
+    boolean selectEmail(User user);
 
 }

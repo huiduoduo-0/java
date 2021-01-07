@@ -19,6 +19,7 @@ public interface UserMapper {
 
     User selectByUser(User user);
 
+    //根据用户名查重
     User selectByUserName(User user);
 
     //根据用户名修改
