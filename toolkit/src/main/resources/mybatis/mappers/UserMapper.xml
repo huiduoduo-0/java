@@ -14,6 +14,26 @@
     <result column="introduction" jdbcType="VARCHAR" property="introduction" />
     <result column="addtime" jdbcType="BIGINT" property="addtime" />
   </resultMap>
+
+  <!--查询所有的高级映射-->
+  <resultMap id="selectAllMap" type="com.hdd.toolkit.model.User">
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="img_path" jdbcType="VARCHAR" property="imgPath" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <result column="addtime" jdbcType="BIGINT" property="addtime" />
+    <association property="account" javaType="com.hdd.toolkit.model.Account">
+      <result column="user_id" jdbcType="BIGINT" property="userId" />
+      <result column="surplus" jdbcType="BIGINT" property="surplus" />
+      <result column="integral" jdbcType="INTEGER" property="integral" />
+      <result column="total_consume" jdbcType="DECIMAL" property="totalConsume" />
+    </association>
+  </resultMap>
+
   <sql id="Base_Column_List">
     id, user_name, user_password, real_name, sex, img_path, email, tel, area_code,
     introduction, addtime
@@ -36,6 +56,27 @@
     <include refid="Base_Column_List" />
        from tb_user where user_name=#{userName}
     </select>
+  <!--根据用户id查询所有的语句-->
+  <select id="SelectAll" resultMap="selectAllMap">
+   SELECT
+      tu.user_name,
+      tu.real_name,
+      tu.user_password,
+      tu.sex,
+      tu.img_path,
+      tu.email,
+      tu.tel,
+      tu.introduction,
+      tu.addtime,
+      ta.user_id,
+      ta.surplus,
+      ta.integral,
+      ta.total_consume
+FROM tb_user tu
+LEFT JOIN tb_account ta ON ta.user_id=tu.id
+WHERE id=#{id}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
 <!--  注册  根据电话查重-->
   <select id="selectTel" resultType="com.hdd.toolkit.model.User">
     select

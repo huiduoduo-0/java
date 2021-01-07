@@ -51,10 +51,16 @@ public class User implements Serializable {
      */
     private String email;
 
+   /**
     /**
      * 联系电话
      */
     private String tel;
+
+    /**
+     * 盐值（密码机密）
+     */
+    private String salt;
 
     /**
      * 区号
@@ -70,6 +76,11 @@ public class User implements Serializable {
      * 注册时间
      */
     private Long addtime;
+
+    /**
+     * 账户表的对象
+     */
+    private  Account account;
 
     private static final long serialVersionUID = 1L;
 

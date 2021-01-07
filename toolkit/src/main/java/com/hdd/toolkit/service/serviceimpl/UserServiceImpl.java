@@ -1,5 +1,7 @@
 package com.hdd.toolkit.service.serviceimpl;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.hdd.toolkit.dao.UserMapper;
 import com.hdd.toolkit.model.StatusResult;
 import com.hdd.toolkit.model.User;
@@ -7,15 +9,24 @@ import com.hdd.toolkit.service.UserService;
 import com.hdd.toolkit.utils.JwtUtil;
 import com.hdd.toolkit.utils.Md5;
 import com.hdd.toolkit.utils.RandomValidateCode;
+import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -104,6 +115,119 @@ public class UserServiceImpl implements UserService {
         return userMapper.insert(user);
     }
 
+    /**
+     * 根据用户id查询所有的用户方法的业务实现方法
+     * @param id
+     * @return
+     */
+    @Override
+    public StatusResult<Map> SelectAll(Long id,String token) {
+        //检验页面传递来的token跟redis里存的token一致
+        if(token.equals(redisTemplate.opsForValue().get("token"))){
+            //调用封装好的获取token方法
+            DecodedJWT tokens=JwtUtil.getTokenInfo("token");
+            //从token中取出登录时存入的id
+            String tokenId=tokens.getClaims().get("id").asString();
+            //根据token里的id调用查询所有的方法
+            List<User> userList = userMapper.SelectAll(Long.valueOf(tokenId));
+            //将查询出来的集合装进map中
+            map.put("userList",userList);
+            //将页面传来的token装进map中返回给页面
+            map.put("token",token);
+            //将map返回页面
+            return new StatusResult<Map>(200, "跳转成功", map);
+        }
+        //页面传递来的token跟redis里存的token不一致，返回错误信息
+        else {
+            //返回给页面报错信息
+            return new StatusResult<Map>(404,"登录超时,请重新登录");
+        }
+
+    }
+
+    /**
+     * 根据id查询出对象的业务实现方法
+     * @param id
+     * @return
+     */
+    @Override
+    public User selectByPrimaryKey(Long id,String token) {
+        //调用封装好的获取token方法
+        DecodedJWT tokens=JwtUtil.getTokenInfo("token");
+        //从token中取出登录时存入的id
+        String tokenId=tokens.getClaims().get("id").asString();
+        //返回根据id查询所有用户信息的方法
+        return userMapper.selectByPrimaryKey(Long.valueOf(tokenId));
+    }
+
+    /**
+     *执行修改个人信息的业务实现方法
+     * @param user
+     * @return
+     */
+    @Override
+    public StatusResult<Map> doUpdate(User user, HttpServletRequest req, MultipartFile file) throws IOException {
+        //调用封装好的获取token方法
+        DecodedJWT tokens=JwtUtil.getTokenInfo("token");
+        //从token中取出登录时存入的id
+        String tokenId=tokens.getClaims().get("id").asString();
+        //调用根据id查询用户对象的方法
+        User user1 = userMapper.selectByPrimaryKey(Long.valueOf(tokenId));
+        //调用查询用户名的方法
+        User user2 = userMapper.selectByUserName(user);
+        //校验用户名是否重复
+        if (user2!=null){
+            return new StatusResult(404,"该用户名已存在");
+        }else {
+
+        }
+        //头像修改
+        String fileName = file.getOriginalFilename();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        //如果文件不为空进行文件上传
+        if (!StringUtils.isEmpty(fileName)){
+        FileOutputStream fos = new FileOutputStream("D:\\uploadFiles/"+sdf.format(new Date())+fileName.substring(fileName.lastIndexOf('.')));
+        String path = "/upload/file/"+sdf.format(new Date())+fileName.substring(fileName.lastIndexOf('.'));
+        fos.write(file.getBytes());
+        fos.flush();
+        fos.close();
+        //将文件的路径装进user1中
+        user1.setImgPath(path);
+        }else {
+            return new StatusResult(404,"修改头像失败");
+        }
+        //执行修改用户信息的方法
+        userMapper.updateByPrimaryKeySelective(user1);
+        //返回修改成功信息
+        return new StatusResult(200,"修改成功");
+    }
+
+    /**
+     * 查找用户名重复的方法的业务实现方法
+     * @param user
+     * @return boolean
+     */
+    @Override
+    public StatusResult<Map> SelectUserName(User user) {
+        //调用封装好的获取token方法
+        DecodedJWT tokens=JwtUtil.getTokenInfo("token");
+        //从token中取出登录时存入的id
+        String tokenId=tokens.getClaims().get("id").asString();
+        //调用根据id查询用户对象的方法
+        User user1 = userMapper.selectByPrimaryKey(Long.valueOf(tokenId));
+        //调用查询用户名的方法
+        User user2 = userMapper.selectByUserName(user);
+        if (user2!=null){
+            return  new StatusResult(404,"该用户名已存在");
+        }else {
+            //将页面传来的名字装进user1中
+            user1.setUserName(user.getUserName());
+            //执行修改用户信息的方法
+            userMapper.updateByPrimaryKeySelective(user1);
+            return new StatusResult(200,"该用户名可用");
+        }
+
+    }
 
     /**
      * 忘记密码执行逻辑
