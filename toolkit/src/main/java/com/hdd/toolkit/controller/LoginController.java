@@ -27,7 +27,7 @@ public class LoginController {
      */
     @PostMapping("/go")
     public StatusResult<Map> doLogin(@RequestBody User user){
-
+        System.out.println("user====="+user);
         return userService.selectByUser(user);
     }
 
@@ -37,7 +37,7 @@ public class LoginController {
      */
     @PutMapping("/modify")
     public StatusResult<Map> forget(@RequestBody User user){
-        System.out.println("user"+user);
+
         return userService.forget(user);
     }
 

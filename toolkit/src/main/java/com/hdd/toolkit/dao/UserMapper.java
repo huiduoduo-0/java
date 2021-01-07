@@ -25,9 +25,10 @@ public interface UserMapper {
     //根据用户名修改
     int updateByUsername(User user);
 
-    //根据电话查重
+    //根据手机号查重
     User selectTel(User user);
 
     //根据邮箱查重
     User selectEmail(User user);
+
 }

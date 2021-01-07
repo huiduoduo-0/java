@@ -52,6 +52,16 @@ public class UserServiceImpl implements UserService {
             }
         }
 
+        String code1 = (String) session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
+        if (!user.getCode().equalsIgnoreCase(code1)){
+            return new StatusResult<Map>(404,"验证码不正确");
+        }
+        if (userDB==null){
+            return new StatusResult<Map>(404,"用户名错误");
+        }
+        if (!encode.equals(userDB.getUserPassword())){
+            return new StatusResult<Map>(404,"密码错误");
+        }
         return new StatusResult<Map>(500,"登录失败");
     }
 
@@ -136,30 +146,33 @@ public class UserServiceImpl implements UserService {
 
     //用户名查重
     @Override
-    public boolean selectName(User user) {
+    public StatusResult selectName(User user) {
+        //调用dao层 用户名查重方法
         User user1 = userMapper.selectByUserName(user);
         if (user1!=null){
-            return false;
+            return new StatusResult(404,"用户名已存在");
         }
-        return true;
+        return new StatusResult(200,"用户名可用");
     }
-//电话查重
+    //手机号查重
     @Override
-    public boolean selectTel(User user) {
+    public StatusResult selectTel(User user) {
+        //调用dao层 手机号查重方法
         User user1 = userMapper.selectTel(user);
         if (user1!=null){
-            return false;
+            return new StatusResult(404,"手机号已存在");
         }
-        return true;
+        return new StatusResult(200,"手机号可用");
     }
-//邮箱查重
+    //邮箱查重
     @Override
-    public boolean selectEmail(User user) {
+    public StatusResult selectEmail(User user) {
+        //调用dao层 邮箱查重方法
         User user1 = userMapper.selectEmail(user);
         if (user1!=null){
-            return false;
+            return new StatusResult(404,"邮箱已存在");
         }
-        return true;
+        return new StatusResult(200,"邮箱可用");
     }
 
 
