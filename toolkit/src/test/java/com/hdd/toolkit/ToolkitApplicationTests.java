@@ -2,12 +2,14 @@ package com.hdd.toolkit;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import redis.clients.jedis.Jedis;
 
 @SpringBootTest
-class ToolkitApplicationTests {
+public class ToolkitApplicationTests {
 
     @Test
-    void contextLoads() {
+    public void init01() {
+
     }
 
 }

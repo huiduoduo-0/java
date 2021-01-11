@@ -3,64 +3,57 @@ package com.hdd.toolkit.controller;
 import com.hdd.toolkit.model.StatusResult;
 import com.hdd.toolkit.model.User;
 import com.hdd.toolkit.service.UserService;
-import org.apache.commons.lang3.StringUtils;
-import com.hdd.toolkit.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.HashMap;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
+
 
 /**
  * 用户
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/index")
+@RequestMapping("/user")
 public class UserController {
 
     @Resource
     UserService userService;
 
-    @Autowired
-    UserService userServiceImpl;
     /**
-     * 用户个人信息
+     * 用户名重复的方法
+     * @param userName
      * @return
      */
-    @PostMapping(value="/usercenter")
-    public StatusResult userCenter(Long id,String token){
-        //返回并调用查询所有的方法
-        return userService.SelectAll(id,token);
+    @GetMapping(value = "repeatUsername")
+    public StatusResult repeatUserName(String userName,String id){
+        //调用用户名重复的service方法
+        return userService.repeatByUserName(userName,id);
     }
 
     /**
-     * 修改个人信息的方法
-     * @param user
-     * @param req
-     * @param file
+     * 执行注册的方法
      * @return
-     * @throws IOException
      */
-    @PostMapping(value = "updateUserCenter")
-    public StatusResult UpdateUserCenter(User user, HttpServletRequest req, MultipartFile file) throws IOException {
-        //返回并调用修改信息的方法
-        return  userService.doUpdate(user,req,file);
+    @PostMapping(value = "doRegister")
+    public StatusResult doRegister(@RequestBody Map<String,String> map){
+        //调用执行注册的service的方法
+        System.out.println("map====="+map);
+        return  userService.doRegister(map);
     }
 
     /**
-     * 查询用户名是否重复的方法
-     * @param user
+     * 执行登录的方法
+     * @param map
+     * @param principals
      * @return
      */
-    @PostMapping(value = "selectUserName")
-    public StatusResult SelectUsername(User user){
-        //返回并调用查询用户名是否重复的方法
-        return  userService.SelectUserName(user);
+    @PostMapping(value = "doLogin")
+    public StatusResult doLogin(@RequestBody Map<String,Object> map){
+        //调用执行登录的service的方法
+        return userService.selectByUserName(map);
     }
 
 }

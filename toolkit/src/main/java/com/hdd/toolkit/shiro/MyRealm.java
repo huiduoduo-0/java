@@ -2,6 +2,7 @@ package com.hdd.toolkit.shiro;
 
 
 
+import com.hdd.toolkit.dao.UserMapper;
 import com.hdd.toolkit.model.StatusResult;
 import com.hdd.toolkit.model.User;
 import com.hdd.toolkit.service.UserService;
@@ -12,14 +13,13 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashSet;
-import java.util.Set;
+import javax.annotation.Resource;
 
 
 public class MyRealm extends AuthorizingRealm {
 
-    @Autowired
-    private UserService userService;
+    @Resource
+    private UserMapper userMapper;
    /* @Autowired
     private UserRoleMapper userRoleMapper;*/
 
@@ -40,27 +40,25 @@ public class MyRealm extends AuthorizingRealm {
     //认证(登录)
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        User user = (User) token.getPrincipal();
+        String userName = (String) token.getPrincipal();
 
         //通过登录验证传过来的token结果获取唯一身份到数据库进行查询，若有，则进行认证；没有的话，抛出异常。
-        StatusResult user1 = userService.selectByUserName(user);
+        User user = userMapper.repeatByUserName(userName);
+        System.out.println("user = " + user);
 
         if (user != null) {
 
             String credentials = user.getUserPassword();
 
-//            ByteSource salt = ByteSource.Util.bytes(user.getSalt());
+            ByteSource salt = ByteSource.Util.bytes(user.getSalt());
 
             String realmName = this.getName();
 
-//          SecurityUtils.getSubject().getSession().setAttribute("user",user);
-
-
-//            return new SimpleAuthenticationInfo(user1, credentials, salt, realmName);
+           return new SimpleAuthenticationInfo(user, credentials, salt, realmName);
 
         } else {
             throw new UnknownAccountException();
         }
-        return null;
+
     }
 }
