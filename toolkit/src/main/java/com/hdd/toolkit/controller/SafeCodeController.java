@@ -18,7 +18,7 @@ public class SafeCodeController {
      * @param request
      * @param response
      */
-    @RequestMapping(value = "/img",method = RequestMethod.GET)
+    @RequestMapping(value = "/img", method = RequestMethod.GET)
     public void image(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("image/jpeg");// 设置相应类型,告诉浏览器输出的内容为图片
         response.setHeader("Pragma", "No-cache");// 设置响应头信息，告诉浏览器不要缓存此内容

@@ -1,17 +1,13 @@
 package com.hdd.toolkit.shiro;
 
 
-
 import com.hdd.toolkit.dao.UserMapper;
-import com.hdd.toolkit.model.StatusResult;
 import com.hdd.toolkit.model.User;
-import com.hdd.toolkit.service.UserService;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.Resource;
 
@@ -54,7 +50,7 @@ public class MyRealm extends AuthorizingRealm {
 
             String realmName = this.getName();
 
-           return new SimpleAuthenticationInfo(user, credentials, salt, realmName);
+            return new SimpleAuthenticationInfo(user, credentials, salt, realmName);
 
         } else {
             throw new UnknownAccountException();

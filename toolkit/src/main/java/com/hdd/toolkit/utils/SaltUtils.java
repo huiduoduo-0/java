@@ -9,10 +9,11 @@ import java.util.Random;
 public class SaltUtils {
     /**
      * 生成随机字符的salt的静态方法
+     *
      * @param
      * @return
      */
-    public static String getSalt(){
+    public static String getSalt() {
         char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567890!@#$%^&*()".toCharArray();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 10; i++) {
@@ -24,10 +25,11 @@ public class SaltUtils {
 
     /**
      * 生成随机字符的静态方法
+     *
      * @param
      * @return
      */
-    public static String getsjs(){
+    public static String getsjs() {
         char[] chars = "01234567890".toCharArray();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 6; i++) {
@@ -36,6 +38,7 @@ public class SaltUtils {
         }
         return sb.toString();
     }
+
     public static void main(String[] args) {
         System.out.println(getsjs());
     }

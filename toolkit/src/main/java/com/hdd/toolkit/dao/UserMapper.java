@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 public interface UserMapper {
     /**
      * 根据id删除的方法
+     *
      * @param id
      * @return
      */
@@ -15,6 +16,7 @@ public interface UserMapper {
 
     /**
      * 添加用户的方法
+     *
      * @param user
      * @return
      */
@@ -22,6 +24,7 @@ public interface UserMapper {
 
     /**
      * 动态添加用户的方法
+     *
      * @param user
      * @return
      */
@@ -29,6 +32,7 @@ public interface UserMapper {
 
     /**
      * 根据id查询用户的方法
+     *
      * @param id
      * @return
      */
@@ -36,6 +40,7 @@ public interface UserMapper {
 
     /**
      * 动态修改用户的方法
+     *
      * @param user
      * @return
      */
@@ -43,6 +48,7 @@ public interface UserMapper {
 
     /**
      * 修改用户的方法
+     *
      * @param user
      * @return
      */
@@ -50,10 +56,11 @@ public interface UserMapper {
 
     /**
      * 查询用户名是否重复的方法
+     *
      * @param userName
      * @return
      */
-    User repeatByUserName(@Param(value ="userName") String userName);
+    User repeatByUserName(@Param(value = "userName") String userName);
 
     User selectByUserName(User user);
 }
