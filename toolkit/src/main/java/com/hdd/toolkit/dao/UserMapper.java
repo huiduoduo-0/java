@@ -2,66 +2,58 @@ package com.hdd.toolkit.dao;
 
 import com.hdd.toolkit.model.User;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserMapper {
     /**
-     * 根据id删除用户信息
+     * 根据id删除的方法
      * @param id
      * @return
      */
     int deleteByPrimaryKey(Long id);
-    /**
-     * 新增用户信息的方法
-     * @param record
-     * @return
-     */
-    int insert(User record);
 
     /**
-     * 动态添加用户信息的方法
-     * @param record
+     * 添加用户的方法
+     * @param user
      * @return
      */
-    int insertSelective(User record);
+    int insert(User user);
 
     /**
-     * 根据id查询所有的方法
+     * 动态添加用户的方法
+     * @param user
+     * @return
+     */
+    int insertSelective(User user);
+
+    /**
+     * 根据id查询用户的方法
      * @param id
      * @return
      */
     User selectByPrimaryKey(Long id);
+
     /**
      * 动态修改用户的方法
-     * @param record
+     * @param user
      * @return
      */
-    int updateByPrimaryKeySelective(User record);
+    int updateByPrimaryKeySelective(User user);
 
     /**
      * 修改用户的方法
-     * @param record
+     * @param user
      * @return
      */
-    int updateByPrimaryKey(User record);
-
-    User selectByUser(User user);
-
-    User selectByUserName(User user);
+    int updateByPrimaryKey(User user);
 
     /**
-     * 根据用户id查询所有的用户方法
-     * @param id
+     * 查询用户名是否重复的方法
+     * @param userName
      * @return
      */
-    List<User> SelectAll(Long id);
+    User repeatByUserName(@Param(value ="userName") String userName);
 
-
-    User selectTel(User user);
-
-    User selectEmail(User user);
-
-    void updateByUsername(User user1);
+    User selectByUserName(User user);
 }
