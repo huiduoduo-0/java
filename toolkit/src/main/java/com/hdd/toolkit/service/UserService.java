@@ -31,5 +31,25 @@ public interface UserService {
      * @return
      */
     StatusResult selectByUserName(Map<String,Object> map);
+    StatusResult doUpdate(User user, HttpServletRequest req, MultipartFile file) throws IOException;
+
+    /**
+     * 查找用户名重复的方法的业务逻辑层
+     * @param user
+     * @return boolean
+     */
+    StatusResult SelectUserName(User user);
+
+    //忘记密码
+    StatusResult forget(User user);
+
+    //前台 用户名查重
+    StatusResult selectName(User user);
+    //前台 电话查重
+    StatusResult selectTel(User user);
+    //前台 邮箱查重
+    StatusResult selectEmail(User user);
+
+
 
 }
