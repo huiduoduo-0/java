@@ -61,7 +61,6 @@ public interface UserMapper {
      * @return
      */
     User repeatByUserName(@Param(value = "userName") String userName);
-
     /**
      * 登录查询用户名
      * @param user
