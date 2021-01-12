@@ -50,6 +50,43 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 查询手机号是否重复的业务实现方法
+     * @param mobile
+     * @return
+     */
+    @Override
+    public StatusResult repeatByMobile(String mobile) {
+        //调用查询手机号重复的方法
+        User user = userMapper.repeatByMobile(mobile);
+        //进行手机号重复校验
+        if (user != null) {
+            //返回错误信息
+            return new StatusResult<Map>(404, "手机号重复");
+        } else {
+            return new StatusResult<Map>(200, "手机号可用");
+        }
+    }
+
+    /**
+     * 查询邮箱重复的业务实现方法
+     * @param email
+     * @return
+     */
+    @Override
+    public StatusResult repeatByEmail(String email) {
+        //调用查询邮箱重复的方法
+        User user = userMapper.repeatByEmail(email);
+        //进行邮箱重复校验
+        if (user != null) {
+            //返回错误信息
+            return new StatusResult<Map>(404, "邮箱重复");
+        } else {
+            return new StatusResult<Map>(200, "邮箱可用");
+        }
+    }
+
+
+    /**
      * 注册用户的方法的业务实现方法
      *
      * @param map
@@ -137,6 +174,13 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
+
+
+
+
+
+
 }
 
 

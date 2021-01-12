@@ -62,5 +62,24 @@ public interface UserMapper {
      */
     User repeatByUserName(@Param(value = "userName") String userName);
 
+    /**
+     * 登录查询用户名
+     * @param user
+     * @return
+     */
     User selectByUserName(User user);
+
+    /**
+     * 查询手机号是否重复的方法
+     * @param mobile
+     * @return
+     */
+    User repeatByMobile(@Param(value = "mobile") String mobile);
+
+    /**
+     * 查询邮箱重复的方法
+     * @param email
+     * @return
+     */
+    User repeatByEmail(@Param(value = "email") String email);
 }

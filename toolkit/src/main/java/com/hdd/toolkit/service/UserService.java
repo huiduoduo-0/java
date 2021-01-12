@@ -18,13 +18,34 @@ public interface UserService {
     StatusResult repeatByUserName(@Param(value = "userName") String userName, @Param(value = "id") String id);
 
     /**
+     * 查询手机号是否重复的方法的业务逻辑层
+     * @param mobile
+     * @return
+     */
+    StatusResult repeatByMobile(@Param(value = "mobile") String mobile);
+
+    /**
+     * 查询邮箱重复的业务逻辑层
+     * @param email
+     * @return
+     */
+    StatusResult repeatByEmail(@Param(value = "email") String email);
+
+    /**
      * 注册用户的方法的业务逻辑层
      *
      * @return
      */
     StatusResult doRegister(Map<String, String> map);
 
+    /**
+     * 登录查询用户名的业务逻辑层
+     * @param map
+     * @return
+     */
     StatusResult selectByUserName(Map<String, Object> map);
+
+
 
 
 }

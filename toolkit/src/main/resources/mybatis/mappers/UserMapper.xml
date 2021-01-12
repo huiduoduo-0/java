@@ -26,6 +26,20 @@
     from tb_user
     where user_name=#{userName}
   </select>
+  <!--查询手机号是否重复的方法-->
+  <select id="repeatByMobile" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_user
+    where mobile=#{mobile}
+  </select>
+  <!--查询邮箱重复的方法-->
+  <select id="repeatByEmail" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_user
+    where email=#{email}
+  </select>
   <select id="selectByUserName" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

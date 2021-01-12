@@ -32,6 +32,28 @@ public class UserController {
     }
 
     /**
+     * 手机号重复的方法
+     * @param mobile
+     * @return
+     */
+    @GetMapping(value = "repeatMobile")
+    public StatusResult repeatMobile(String mobile){
+        //调用手机号重复的service的方法
+        return  userService.repeatByMobile(mobile);
+    }
+
+    /**
+     * 邮箱重复的方法
+     * @param email
+     * @return
+     */
+    @GetMapping(value = "repeatEmail")
+    public  StatusResult repeatEmail(String email){
+        //调用邮箱重复的service的方法
+        return  userService.repeatByMobile(email);
+    }
+
+    /**
      * 执行注册的方法
      *
      * @return
