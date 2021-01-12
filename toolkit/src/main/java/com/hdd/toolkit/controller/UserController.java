@@ -76,6 +76,7 @@ public class UserController {
      */
     @PostMapping(value = "doLogin")
     public StatusResult doLogin(@RequestBody Map<String, Object> map) {
+        System.out.println(map);
         //调用执行登录的service的方法
         return userService.selectByUserName(map);
     }
