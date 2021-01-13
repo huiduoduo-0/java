@@ -28,7 +28,12 @@ public class UserController {
      * @return
      */
     @GetMapping(value = "repeatUsername")
+<<<<<<< Updated upstream
     public StatusResult repeatUserName(@RequestParam("userName") String userName,@RequestParam("id") String id) {
+=======
+    public StatusResult repeatUserName(@RequestParam("userName") String userName, @RequestParam("id") String id) {
+        System.out.println(userName);
+>>>>>>> Stashed changes
         //调用用户名重复的service方法
         return userService.repeatByUserName(userName, id);
     }
@@ -39,7 +44,12 @@ public class UserController {
      * @return
      */
     @GetMapping(value = "repeatMobile")
+<<<<<<< Updated upstream
     public StatusResult repeatMobile(@RequestParam("mobile") String mobile){
+=======
+    public StatusResult repeatMobile(@RequestBody String mobile){
+        System.out.println(mobile);
+>>>>>>> Stashed changes
         //调用手机号重复的service的方法
         return  userService.repeatByMobile(mobile);
     }
@@ -50,7 +60,11 @@ public class UserController {
      * @return
      */
     @GetMapping(value = "repeatEmail")
+<<<<<<< Updated upstream
     public  StatusResult repeatEmail(@RequestParam("email") String email){
+=======
+    public  StatusResult repeatEmail(@RequestBody String email){
+>>>>>>> Stashed changes
         //调用邮箱重复的service的方法
         return  userService.repeatByMobile(email);
     }
