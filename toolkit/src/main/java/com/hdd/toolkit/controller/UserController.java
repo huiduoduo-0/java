@@ -2,6 +2,7 @@ package com.hdd.toolkit.controller;
 
 import com.hdd.toolkit.model.StatusResult;
 import com.hdd.toolkit.service.UserService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -19,6 +20,7 @@ public class UserController {
     @Resource
     UserService userService;
 
+
     /**
      * 用户名重复的方法
      *
@@ -26,7 +28,7 @@ public class UserController {
      * @return
      */
     @GetMapping(value = "repeatUsername")
-    public StatusResult repeatUserName(String userName, String id) {
+    public StatusResult repeatUserName(@RequestParam("userName") String userName,@RequestParam("id") String id) {
         //调用用户名重复的service方法
         return userService.repeatByUserName(userName, id);
     }
@@ -37,7 +39,7 @@ public class UserController {
      * @return
      */
     @GetMapping(value = "repeatMobile")
-    public StatusResult repeatMobile(String mobile){
+    public StatusResult repeatMobile(@RequestParam("mobile") String mobile){
         //调用手机号重复的service的方法
         return  userService.repeatByMobile(mobile);
     }
@@ -48,7 +50,7 @@ public class UserController {
      * @return
      */
     @GetMapping(value = "repeatEmail")
-    public  StatusResult repeatEmail(String email){
+    public  StatusResult repeatEmail(@RequestParam("email") String email){
         //调用邮箱重复的service的方法
         return  userService.repeatByMobile(email);
     }
@@ -76,6 +78,27 @@ public class UserController {
     public StatusResult doLogin(@RequestBody Map<String, Object> map) {
         //调用执行登录的service的方法
         return userService.selectByUserName(map);
+    }
+
+    /**
+     * 注销登录的方法
+     * @param token
+     * @return
+     */
+    @PostMapping(value = "loginOut")
+    public StatusResult loginOut(@RequestParam("token") String token){
+        //调用注销登录的service方法
+        return userService.loginOut(token);
+    }
+
+    /**
+     * 跳转个人中心的方法
+     * @return
+     */
+    @GetMapping(value = "userCenter")
+    public StatusResult userCenter(){
+        //调用个人中心的service的方法
+        return userService.selectUserAndAccount();
     }
 
 }

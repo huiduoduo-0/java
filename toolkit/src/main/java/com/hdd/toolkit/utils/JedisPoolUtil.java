@@ -23,5 +23,4 @@ public class JedisPoolUtil {
         return jedis;
     }
 
-
 }

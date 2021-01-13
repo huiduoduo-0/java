@@ -15,6 +15,20 @@
     <result column="introduction" jdbcType="VARCHAR" property="introduction" />
     <result column="addtime" jdbcType="BIGINT" property="addtime" />
   </resultMap>
+  <!--查询用户表关联账户表的高级映射-->
+  <resultMap id="selectUserAndAccount" type="com.hdd.toolkit.model.User">
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="sex" jdbcType="INTEGER" property="sex" />
+      <result column="img_path" jdbcType="VARCHAR" property="imgPath" />
+      <result column="email" jdbcType="VARCHAR" property="email" />
+      <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+      <result column="introduction" jdbcType="VARCHAR" property="introduction" />
+    <association property="account" javaType="com.hdd.toolkit.model.Account">
+      <result column="surplus" jdbcType="BIGINT" property="surplus" />
+      <result column="integral" jdbcType="INTEGER" property="integral" />
+      <result column="total_consume" jdbcType="DECIMAL" property="totalConsume" />
+    </association>
+  </resultMap>
   <sql id="Base_Column_List">
     id, user_name, user_password, real_name, sex, img_path, email, mobile, salt, area_code,
     introduction, addtime
@@ -40,10 +54,33 @@
     from tb_user
     where email=#{email}
   </select>
+  <!--查询用户表关联账户表-->
+  <select id="selectUserAndAccount" resultMap="selectUserAndAccount">
+    SELECT
+	tu.user_name,
+	tu.sex,
+	tu.img_path,
+	tu.email,
+	tu.mobile,
+	tu.introduction,
+	ta.integral,
+	ta.surplus,
+	ta.total_consume
+FROM
+	tb_user tu
+LEFT JOIN tb_account ta ON ta.user_id = tu.id
+  </select>
   <select id="selectByUserName" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     where user_name=#{userName}
+  </select>
+  <!--忘记密码查询语句-->
+  <select id="selectByUserNameAndMobile" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_user
+    where user_name=#{userName} and mobile=#{mobile}
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 

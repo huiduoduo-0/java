@@ -15,8 +15,10 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -51,6 +53,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 查询手机号是否重复的业务实现方法
+     *
      * @param mobile
      * @return
      */
@@ -69,6 +72,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 查询邮箱重复的业务实现方法
+     *
      * @param email
      * @return
      */
@@ -95,7 +99,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public StatusResult<Map> doRegister(Map<String, String> map) {
         //利用正则表达式来设置用户名格式
-        String reUsername = "[a-zA-Z]{4,12}";
+        String reUsername = "[0-9a-zA-Z]{4,12}";
         //进行用户名格式的校验
         if (!map.get("userName").matches(reUsername)) {
             return new StatusResult(404, "用户名格式错误");
@@ -175,11 +179,40 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     * 退出登录的业务实现方法
+     *
+     * @return
+     */
+    @Override
+    public StatusResult loginOut(String token) {
+        Jedis jedis = JedisPoolUtil.getJedis();
+        //用jedis删除redis里的token
+        jedis.del("token");
+        return new StatusResult<Map>(200, "注销成功");
+    }
 
+    /**
+     * 查询用户表关联账户表的业务实现方法
+     *
+     * @return
+     */
+    @Override
+    public StatusResult selectUserAndAccount() {
+        //new个map
+        Map<String, Object> map = new HashMap<>();
+        //调用userMapper里的查询的方法
+        List<User> userList = userMapper.selectUserAndAccount();
+        if (userList == null) {
+            return new StatusResult<Map>(404, "跳转个人中心失败");
+        } else {
+            //将查询出来的集合装进map里
+            map.put("userList", userList);
+            //返回页面
+            return new StatusResult<Map>(200, "跳转个人中心成功", map);
+        }
 
-
-
-
+    }
 
 }
 

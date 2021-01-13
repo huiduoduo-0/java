@@ -4,6 +4,8 @@ import com.hdd.toolkit.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
     /**
@@ -81,4 +83,16 @@ public interface UserMapper {
      * @return
      */
     User repeatByEmail(@Param(value = "email") String email);
+
+    /**
+     * 查询用户表关联账户表
+     * @return
+     */
+    List<User> selectUserAndAccount();
+
+    User selectByUserNameAndMobile(@Param(value = "userName") String userName,@Param(value = "mobile") String mobile);
+
+
+
+
 }

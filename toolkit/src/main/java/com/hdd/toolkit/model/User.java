@@ -30,6 +30,9 @@ public class User implements Serializable {
      */
     private String userPassword;
 
+    /**
+     * 真实姓名
+     */
     private String realName;
 
     /**
@@ -71,6 +74,11 @@ public class User implements Serializable {
      * 注册时间
      */
     private Long addtime;
+
+    /**
+     * 账户表的对象
+     */
+    private Account account;
 
     private static final long serialVersionUID = 1L;
 

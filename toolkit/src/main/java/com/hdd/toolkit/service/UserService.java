@@ -4,6 +4,7 @@ import com.hdd.toolkit.model.StatusResult;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Service
@@ -44,6 +45,18 @@ public interface UserService {
      * @return
      */
     StatusResult selectByUserName(Map<String, Object> map);
+
+    /**
+     *退出登录的业务逻辑层
+     * @return
+     */
+    StatusResult loginOut(String token);
+
+    /**
+     * 查询用户表关联账户表的业务逻辑层
+     * @return
+     */
+    StatusResult selectUserAndAccount();
 
 
 
