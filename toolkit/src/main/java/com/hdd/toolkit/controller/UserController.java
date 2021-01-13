@@ -41,7 +41,7 @@ public class UserController {
      */
     @GetMapping(value = "repeatMobile")
 
-    public StatusResult repeatMobile(@RequestBody String mobile){
+    public StatusResult repeatMobile(@RequestParam("mobile") String mobile){
         System.out.println(mobile);
         //调用手机号重复的service的方法
         return  userService.repeatByMobile(mobile);
@@ -54,7 +54,7 @@ public class UserController {
      */
     @GetMapping(value = "repeatEmail")
 
-    public  StatusResult repeatEmail(@RequestBody String email){
+    public  StatusResult repeatEmail(@RequestParam("email") String email){
         //调用邮箱重复的service的方法
         return  userService.repeatByMobile(email);
     }
