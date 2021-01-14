@@ -106,6 +106,7 @@ public class UserController {
      */
     @PostMapping(value = "selectByUserNameAndMobile")
     public StatusResult selectByUserNameAndMobile(@RequestBody Map<String, Object> map) {
+        System.out.println(map);
         //调用查询手机号和用户名的方法
         return userService.selectByUserNameAndMobile(map);
     }
