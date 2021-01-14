@@ -117,6 +117,11 @@ public class UserController {
         return userService.selectByUserNameAndMobile(map);
     }
 
+    /**
+     * 忘记密码的方法
+     * @param map
+     * @return
+     */
     @PostMapping(value = "forgetUserPassword")
     public StatusResult forgetUserPassword(@RequestBody Map<String, Object> map){
         //调用service的根据id查询用户的业务逻辑层的方法
