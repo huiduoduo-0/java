@@ -8,7 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-
     /**
      * 根据id删除的方法
      *
