@@ -214,6 +214,52 @@ public class UserServiceImpl implements UserService {
 
     }
 
+
+    /**
+     * 忘记密码根据用户名和手机号查询该用户的业务实现方法
+     * @param map
+     * @return
+     */
+    @Override
+    public StatusResult selectByUserNameAndMobile(Map<String, Object> map) {
+        //从session中取出验证码
+        String code = (String) session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
+        //验证码校验
+        if (!code.equalsIgnoreCase((String) map.get("code"))){
+            return new StatusResult<Map>(404, "验证码错误");
+        }
+        //根据页面传来的用户名和手机号查询mapper里的忘记密码的查询的方法
+        User user = userMapper.selectByUserNameAndMobile((String) map.get("userName"), (String) map.get("mobile"));
+        map.put("user",user);
+        //进行user对象的校验
+        if(user == null){
+            return new StatusResult<Map>(404, "用户名或手机号错误");
+        }else{
+            //返回页面
+            return new StatusResult<Map>(200, "验证成功",map);
+        }
+    }
+
+    /**
+     * 根据id查询用户的业务逻辑层
+     * @param map
+     * @return
+     */
+    @Override
+    public StatusResult selectByPrimaryKey(Map<String, Object> map) {
+        //调用mapper的根据id查询用户的方法
+        User user = userMapper.selectByPrimaryKey(Long.valueOf(String.valueOf(map.get("id"))).longValue());
+        if (user == null){
+            return new StatusResult<Map>(404, "修改失败");
+        }else{
+            //将页面传来的密码set到根据页面传来的id查询出的user对象里
+            user.setUserPassword((String) map.get("userPassword"));
+            //调用修改用户的方法
+            userMapper.updateByPrimaryKeySelective(user);
+            return new StatusResult<Map>(200, "修改成功");
+        }
+
+    }
 }
 
 

@@ -52,7 +52,7 @@ public class UserController {
     @GetMapping(value = "repeatEmail")
     public  StatusResult repeatEmail(@RequestParam("email") String email){
         //调用邮箱重复的service的方法
-        return  userService.repeatByMobile(email);
+        return  userService.repeatByEmail(email);
     }
 
     /**
@@ -101,4 +101,20 @@ public class UserController {
         return userService.selectUserAndAccount();
     }
 
+    /**
+     * 验证手机号用户名是否正确
+     * @param map
+     * @return
+     */
+    @GetMapping(value = "selectByUserNameAndMobile")
+    public StatusResult selectByUserNameAndMobile(@RequestBody Map<String, Object> map){
+        //调用查询手机号和用户名的方法
+        return userService.selectByUserNameAndMobile(map);
+    }
+
+    @PostMapping(value = "forgetUserPassword")
+    public StatusResult forgetUserPassword(@RequestBody Map<String, Object> map){
+        //调用service的根据id查询用户的业务逻辑层的方法
+        return userService.selectByPrimaryKey(map);
+    }
 }

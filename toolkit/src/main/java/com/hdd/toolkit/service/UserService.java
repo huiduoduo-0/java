@@ -1,6 +1,7 @@
 package com.hdd.toolkit.service;
 
 import com.hdd.toolkit.model.StatusResult;
+import com.hdd.toolkit.model.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -57,6 +58,20 @@ public interface UserService {
      * @return
      */
     StatusResult selectUserAndAccount();
+
+    /**
+     * 忘记密码根据用户名和手机号查询该用户的业务逻辑层
+     * @return
+     */
+    StatusResult selectByUserNameAndMobile(Map<String, Object> map);
+
+    /**
+     * 根据id查询用户的业务逻辑层
+     *
+     * @param id
+     * @return
+     */
+    StatusResult selectByPrimaryKey(Map<String, Object> map);
 
 
 

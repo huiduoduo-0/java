@@ -8,6 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
+
     /**
      * 根据id删除的方法
      *
@@ -90,6 +91,12 @@ public interface UserMapper {
      */
     List<User> selectUserAndAccount();
 
+    /**
+     * 忘记密码根据用户名和手机号查询该用户
+     * @param userName
+     * @param mobile
+     * @return
+     */
     User selectByUserNameAndMobile(@Param(value = "userName") String userName,@Param(value = "mobile") String mobile);
 
 
