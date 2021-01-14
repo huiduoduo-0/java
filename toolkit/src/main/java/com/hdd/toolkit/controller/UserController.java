@@ -70,7 +70,6 @@ public class UserController {
         System.out.println("map=====" + map);
         return userService.doRegister(map);
     }
-
     /**
      * 执行登录的方法
      *
