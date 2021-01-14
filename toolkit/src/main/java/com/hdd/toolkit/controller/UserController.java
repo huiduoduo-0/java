@@ -130,7 +130,7 @@ public class UserController {
      * @return
      */
     @GetMapping(value = "userCenter")
-    public StatusResult userCenter(Map<String, Object> map) {
+    public StatusResult userCenter(@RequestBody Map<String, Object> map) {
         //调用个人中心的service的方法
         return userService.selectUserAndAccount(map);
     }
