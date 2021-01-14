@@ -102,6 +102,7 @@ public class UserController {
      */
     @GetMapping(value = "userCenter")
     public StatusResult userCenter(){
+        System.out.println(1111);
         //调用个人中心的service的方法
         return userService.selectUserAndAccount();
     }
