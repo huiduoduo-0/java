@@ -36,6 +36,7 @@ public class UserController {
 
     /**
      * 手机号重复的方法
+     *
      * @param mobile
      * @return
      */
@@ -49,14 +50,15 @@ public class UserController {
 
     /**
      * 邮箱重复的方法
+     *
      * @param email
      * @return
      */
     @GetMapping(value = "repeatEmail")
 
-    public  StatusResult repeatEmail(@RequestParam("email") String email){
+    public StatusResult repeatEmail(@RequestParam("email") String email) {
         //调用邮箱重复的service的方法
-        return  userService.repeatByEmail(email);
+        return userService.repeatByEmail(email);
     }
 
     /**
@@ -87,45 +89,49 @@ public class UserController {
 
     /**
      * 注销登录的方法
+     *
      * @param token
      * @return
      */
     @PostMapping(value = "loginOut")
-    public StatusResult loginOut(@RequestParam("token") String token){
+    public StatusResult loginOut(@RequestParam("token") String token) {
         //调用注销登录的service方法
         return userService.loginOut(token);
     }
 
-    /**
-     * 跳转个人中心的方法
-     * @return
-     */
-    @GetMapping(value = "userCenter")
-    public StatusResult userCenter(){
-        System.out.println(1111);
-        //调用个人中心的service的方法
-        return userService.selectUserAndAccount();
-    }
 
     /**
      * 验证手机号用户名是否正确
+     *
      * @param map
      * @return
      */
     @GetMapping(value = "selectByUserNameAndMobile")
-    public StatusResult selectByUserNameAndMobile(@RequestBody Map<String, Object> map){
+    public StatusResult selectByUserNameAndMobile(@RequestBody Map<String, Object> map) {
         //调用查询手机号和用户名的方法
         return userService.selectByUserNameAndMobile(map);
     }
 
     /**
      * 忘记密码的方法
+     *
      * @param map
      * @return
      */
     @PostMapping(value = "forgetUserPassword")
-    public StatusResult forgetUserPassword(@RequestBody Map<String, Object> map){
+    public StatusResult forgetUserPassword(@RequestBody Map<String, Object> map) {
         //调用service的根据id查询用户的业务逻辑层的方法
         return userService.selectByPrimaryKey(map);
+    }
+
+    /**
+     * 跳转个人中心的方法
+     *
+     * @return
+     */
+    @GetMapping(value = "userCenter")
+    public StatusResult userCenter(Map<String, Object> map) {
+        //调用个人中心的service的方法
+        return userService.selectUserAndAccount(map);
     }
 }

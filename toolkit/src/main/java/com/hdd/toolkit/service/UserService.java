@@ -21,6 +21,7 @@ public interface UserService {
 
     /**
      * 查询手机号是否重复的方法的业务逻辑层
+     *
      * @param mobile
      * @return
      */
@@ -28,6 +29,7 @@ public interface UserService {
 
     /**
      * 查询邮箱重复的业务逻辑层
+     *
      * @param email
      * @return
      */
@@ -42,25 +44,23 @@ public interface UserService {
 
     /**
      * 登录查询用户名的业务逻辑层
+     *
      * @param map
      * @return
      */
     StatusResult selectByUserName(Map<String, Object> map);
 
     /**
-     *退出登录的业务逻辑层
+     * 退出登录的业务逻辑层
+     *
      * @return
      */
     StatusResult loginOut(String token);
 
-    /**
-     * 查询用户表关联账户表的业务逻辑层
-     * @return
-     */
-    StatusResult selectUserAndAccount();
 
     /**
      * 忘记密码根据用户名和手机号查询该用户的业务逻辑层
+     *
      * @return
      */
     StatusResult selectByUserNameAndMobile(Map<String, Object> map);
@@ -68,12 +68,17 @@ public interface UserService {
     /**
      * 根据id查询用户的业务逻辑层
      *
-     * @param id
+     * @param map
      * @return
      */
     StatusResult selectByPrimaryKey(Map<String, Object> map);
 
-
+    /**
+     * 查询用户表关联账户表的业务逻辑层
+     *
+     * @return
+     */
+    StatusResult selectUserAndAccount(Map<String, Object> map);
 
 
 }

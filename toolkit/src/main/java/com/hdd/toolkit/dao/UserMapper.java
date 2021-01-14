@@ -89,7 +89,7 @@ public interface UserMapper {
      * 查询用户表关联账户表
      * @return
      */
-    List<User> selectUserAndAccount();
+    List<User> selectUserAndAccount(@Param(value = "id") String id);
 
     /**
      * 忘记密码根据用户名和手机号查询该用户

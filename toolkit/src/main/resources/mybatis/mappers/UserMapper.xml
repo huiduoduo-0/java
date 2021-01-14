@@ -69,6 +69,7 @@
 FROM
 	tb_user tu
 LEFT JOIN tb_account ta ON ta.user_id = tu.id
+where id=#{id}
   </select>
   <select id="selectByUserName" resultMap="BaseResultMap">
     select
