@@ -99,7 +99,7 @@ public class RandomValidateCode {
 
         session.setAttribute(RANDOMCODEKEY, randomString);
 
-        System.out.println(randomString);// 输出生成的随机字符串
+        System.out.println("code====="+randomString);// 输出生成的随机字符串
 
         g.dispose();// 关闭窗体，释放资源
         try {

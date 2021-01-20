@@ -8,6 +8,7 @@ import com.hdd.toolkit.utils.JedisPoolUtil;
 import com.hdd.toolkit.utils.JwtUtil;
 import com.hdd.toolkit.utils.MD5ShiroUtil;
 import com.hdd.toolkit.utils.RandomValidateCode;
+import org.apache.http.HttpRequest;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -98,6 +99,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public StatusResult<Map> doRegister(Map<String, String> map) {
+
         //从session中取出验证码
         String reCode = (String) session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
         //进行验证码校验
@@ -156,6 +158,7 @@ public class UserServiceImpl implements UserService {
         //从session中取出验证码
         String code = (String) session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
         //校验验证码
+        System.out.println("code===" + code);
         if (!code.equalsIgnoreCase((String) map.get("code"))) {
             return new StatusResult<Map>(404, "验证码错误");
         }
