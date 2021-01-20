@@ -98,6 +98,13 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public StatusResult<Map> doRegister(Map<String, String> map) {
+        //从session中取出验证码
+        String reCode = (String) session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
+        //进行验证码校验
+        System.out.println("reCode="+reCode);
+        if (!map.get("code").equalsIgnoreCase(reCode)) {
+            return new StatusResult(404, "验证码错误");
+        }
         //利用正则表达式来设置用户名格式
         String reUsername = "[0-9a-zA-Z]{4,12}";
         //进行用户名格式的校验
@@ -120,12 +127,8 @@ public class UserServiceImpl implements UserService {
         if (!map.get("mobile").matches(phone)) {
             return new StatusResult(404, "手机号格式错误");
         }
-        //从session中取出验证码
-        String reCode = (String) session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
-        //进行验证码校验
-        if (!map.get("code").equalsIgnoreCase(reCode)) {
-            return new StatusResult(404, "验证码错误");
-        }
+
+
         //实例化用户的对象
         User user1 = new User();
         //将从页面接收过来的值装进user对象中
