@@ -32,18 +32,18 @@ public interface GoodsService {
     /**
      * 新增数据
      *
-     * @param Goods 实例对象
+     * @param goods 实例对象
      * @return 实例对象
      */
-    Goods insert(Goods Goods);
+    Goods insert(Goods goods);
 
     /**
      * 修改数据
      *
-     * @param Goods 实例对象
+     * @param goods 实例对象
      * @return 实例对象
      */
-    Goods update(Goods Goods);
+    Goods update(Goods goods);
 
     /**
      * 通过主键删除数据
