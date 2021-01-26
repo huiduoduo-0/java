@@ -3,7 +3,6 @@ package com.hdd.toolkit.dao;
 import com.hdd.toolkit.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 @Mapper
@@ -63,8 +62,10 @@ public interface UserMapper {
      * @return
      */
     User repeatByUserName(@Param(value = "userName") String userName);
+
     /**
      * 登录查询用户名
+     *
      * @param user
      * @return
      */
@@ -72,6 +73,7 @@ public interface UserMapper {
 
     /**
      * 查询手机号是否重复的方法
+     *
      * @param mobile
      * @return
      */
@@ -79,6 +81,7 @@ public interface UserMapper {
 
     /**
      * 查询邮箱重复的方法
+     *
      * @param email
      * @return
      */
@@ -86,19 +89,17 @@ public interface UserMapper {
 
     /**
      * 查询用户表关联账户表
+     *
      * @return
      */
     List<User> selectUserAndAccount(@Param(value = "id") String id);
 
     /**
      * 忘记密码根据用户名和手机号查询该用户
+     *
      * @param userName
      * @param mobile
      * @return
      */
-    User selectByUserNameAndMobile(@Param(value = "userName") String userName,@Param(value = "mobile") String mobile);
-
-
-
-
+    User selectByUserNameAndMobile(@Param(value = "userName") String userName, @Param(value = "mobile") String mobile);
 }

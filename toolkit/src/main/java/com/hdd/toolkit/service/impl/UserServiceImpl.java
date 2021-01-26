@@ -13,9 +13,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -123,7 +121,7 @@ public class UserServiceImpl implements UserService {
         //从session中取出验证码
         String reCode = (String) session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
         //进行验证码校验
-        if (!map.get("code").equalsIgnoreCase(reCode)) {
+        if (!reCode.equalsIgnoreCase(map.get("code"))) {
             return new StatusResult(404, "验证码错误");
         }
         //实例化用户的对象
@@ -168,6 +166,7 @@ public class UserServiceImpl implements UserService {
             map.put("token", token);
             //存入redis
             Jedis jedis = JedisPoolUtil.getJedis();
+            //设置存在redis里的时间
             jedis.setex("token", 60 * 60 * 24 * 7, token);
             //关闭资源
             jedis.close();
@@ -176,7 +175,6 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
             return new StatusResult<Map>(404, "用户名或密码错误");
         }
-
     }
 
     /**
@@ -194,7 +192,7 @@ public class UserServiceImpl implements UserService {
 
 
     /**
-     * 忘记密码根据用户名和手机号查询该用户的业务实现方法
+     * 根据用户名和手机号查询该用户并忘记密码的业务实现方法
      *
      * @param map
      * @return
@@ -234,6 +232,7 @@ public class UserServiceImpl implements UserService {
         } else {
             //将页面传来的密码set到根据页面传来的id查询出的user对象里
             user.setUserPassword((String) map.get("userPassword"));
+            user.setUserPassword(MD5ShiroUtil.getMd5(user));
             //调用修改用户的方法
             userMapper.updateByPrimaryKeySelective(user);
             return new StatusResult<Map>(200, "修改成功");
@@ -258,7 +257,26 @@ public class UserServiceImpl implements UserService {
             //返回页面
             return new StatusResult<Map>(200, "跳转个人中心成功", map);
         }
+    }
 
+    /**
+     * 执行修改个人信息的业务实现方法
+     *
+     * @param map
+     * @return
+     */
+    @Override
+    public StatusResult doUpdateUserCenter(Map<String, Object> map) {
+        //根据页面传来的id查询出该用户
+        User user = userMapper.selectByPrimaryKey(Long.valueOf(String.valueOf(map.get("id"))).longValue());
+        //将页面传递来的用户名set到user
+        user.setUserName((String) map.get("userName"));
+        user.setMobile((String) map.get("mobile"));
+        user.setEmail((String) map.get("email"));
+        //调用动态修改用户信息的方法
+        userMapper.updateByPrimaryKeySelective(user);
+        //返回信息
+        return new StatusResult<Map>(200, "修改成功");
     }
 }
 

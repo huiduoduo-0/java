@@ -1,11 +1,9 @@
 package com.hdd.toolkit.service;
 
 import com.hdd.toolkit.model.StatusResult;
-import com.hdd.toolkit.model.User;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Service
@@ -48,7 +46,7 @@ public interface UserService {
      * @param map
      * @return
      */
-    StatusResult selectByUserName(Map<String, Object> map);
+    StatusResult selectByUserName(Map<String, Object> map); 
 
     /**
      * 退出登录的业务逻辑层
@@ -79,6 +77,14 @@ public interface UserService {
      * @return
      */
     StatusResult selectUserAndAccount(Map<String, Object> map);
+
+    /**
+     * 执行修改个人信息的业务逻辑层
+     *
+     * @param map
+     * @return
+     */
+    StatusResult doUpdateUserCenter(Map<String, Object> map);
 
 
 }

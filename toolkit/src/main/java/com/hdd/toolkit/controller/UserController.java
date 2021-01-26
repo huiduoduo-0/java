@@ -2,7 +2,6 @@ package com.hdd.toolkit.controller;
 
 import com.hdd.toolkit.model.StatusResult;
 import com.hdd.toolkit.service.UserService;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -131,5 +130,16 @@ public class UserController {
     public StatusResult userCenter(@RequestBody Map<String, Object> map) {
         //调用个人中心的service的方法
         return userService.selectUserAndAccount(map);
+    }
+
+    /**
+     * 修改个人中心的方法
+     * @param map
+     * @return
+     */
+    @PostMapping(value = "updateUserCenter")
+    public StatusResult updateUserCenter(@RequestBody Map<String, Object> map){
+        //调用修改个人中心的service的方法
+        return userService.doUpdateUserCenter(map);
     }
 }
