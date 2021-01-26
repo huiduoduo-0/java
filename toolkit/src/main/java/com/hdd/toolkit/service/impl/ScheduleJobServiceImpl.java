@@ -41,13 +41,13 @@ public class ScheduleJobServiceImpl implements ScheduleJobService {
         JDProcessor jDprocessor = new JDProcessor();
         jDprocessor.setSid(sid);
         List<String> JDUrls = new ArrayList<>();
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 1; i++) {
             String url = scheduleJob.getJobName();//爬取商品的地址
             JDUrls.add(url);
         }
        //开始爬取数据
         Spider.create(jDprocessor)
-                .addUrl(JDUrls.toArray(new String[3]))
+                .addUrl(JDUrls.toArray(new String[1]))
                 .thread(1)//线程数
                 .addPipeline(jdGoodsPipeline)
                 .start();

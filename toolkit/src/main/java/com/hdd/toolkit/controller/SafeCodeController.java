@@ -11,7 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/code")
-public class SafeCodeController {
+public class
+SafeCodeController {
     /**
      * 验证码
      *
