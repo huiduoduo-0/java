@@ -28,7 +28,7 @@ public class JDProcessor implements PageProcessor {
     @Override
     public void process(Page page) {
         //每次爬取的间隔时间1——3秒
-        this.site.setSleepTime((int) Math.random() * 2000 + 1000);
+        this.site.setSleepTime((int) (Math.random() * 2000) + 1000);
 
         if (page.getHtml().$("#J_goodsList").get() != null) {
             //列表页
@@ -43,14 +43,12 @@ public class JDProcessor implements PageProcessor {
             String imgUrl = dom.select("#spec-img").get(0).attr("data-origin");
             //获取商品路径
             String url = page.getUrl().get();
-
             //获取商品介绍
             String intro = dom.select(".p-parameter-list li").text();
             System.out.println("intro = " + intro);
             //获取规格值
             String spec = dom.select(".Ptable").text();
             System.out.println("spec--------- = " + spec);
-
             //获取商品的价格
             String skuId = url.substring(url.lastIndexOf("/") + 1, url.indexOf(".html"));
             //调用工具类 doget方法获取json数据

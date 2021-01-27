@@ -30,7 +30,7 @@ public class SaltUtils {
      * @return
      */
     public static String getsjs() {
-        char[] chars = "01234567890".toCharArray();
+        char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 6; i++) {
             char aChar = chars[new Random().nextInt(chars.length)];

@@ -18,5 +18,4 @@ public interface ScheduleJobService {
      */
     void start(ScheduleJob scheduleJob);
 
-    public Map<String, Object> getMessage();
 }

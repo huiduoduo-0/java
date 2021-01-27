@@ -1,6 +1,7 @@
 package com.hdd.toolkit.service;
 
 import com.hdd.toolkit.model.Goods;
+import com.hdd.toolkit.model.StatusResult;
 
 import java.util.List;
 
@@ -53,4 +54,5 @@ public interface GoodsService {
      */
     boolean deleteById(Long id);
 
+    StatusResult showGoods();
 }

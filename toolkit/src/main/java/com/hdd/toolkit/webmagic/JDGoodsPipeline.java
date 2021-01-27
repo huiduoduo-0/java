@@ -31,6 +31,7 @@ public class JDGoodsPipeline implements Pipeline {
 //            goods.setUserId(Long.parseLong(id));
             //存入数据库
             goodsService.insert(goods);
+            jedis.close();//关闭流
         }
     }
     

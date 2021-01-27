@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 订单
  */
 @RestController
-@RequestMapping("/index")
+@RequestMapping("/order")
 public class OrderController {
 
 

@@ -22,7 +22,14 @@
     from tb_goods
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+
+    <select id="queryAllGoods" resultType="com.hdd.toolkit.model.Goods">
+      select
+      <include refid="Base_Column_List" />
+      from tb_goods
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from tb_goods
     where id = #{id,jdbcType=BIGINT}
   </delete>
