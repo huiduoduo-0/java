@@ -234,6 +234,7 @@ public class UserServiceImpl implements UserService {
         } else {
             //将页面传来的密码set到根据页面传来的id查询出的user对象里
             user.setUserPassword((String) map.get("userPassword"));
+            user.setUserPassword(MD5ShiroUtil.getMd5(user));
             //调用修改用户的方法
             userMapper.updateByPrimaryKeySelective(user);
             return new StatusResult<Map>(200, "修改成功");
@@ -258,7 +259,26 @@ public class UserServiceImpl implements UserService {
             //返回页面
             return new StatusResult<Map>(200, "跳转个人中心成功", map);
         }
+    }
 
+    /**
+     * 执行修改个人信息的业务实现方法
+     *
+     * @param map
+     * @return
+     */
+    @Override
+    public StatusResult doUpdateUserCenter(Map<String, Object> map) {
+        //根据页面传来的id查询出该用户
+        User user = userMapper.selectByPrimaryKey(Long.valueOf(String.valueOf(map.get("id"))).longValue());
+        //将页面传递来的用户名set到user
+        user.setUserName((String) map.get("userName"));
+        user.setMobile((String) map.get("mobile"));
+        user.setEmail((String) map.get("email"));
+        //调用动态修改用户信息的方法
+        userMapper.updateByPrimaryKeySelective(user);
+        //返回信息
+        return new StatusResult<Map>(200, "修改成功");
     }
 }
 
