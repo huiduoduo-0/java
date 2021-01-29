@@ -7,7 +7,6 @@ import org.jsoup.nodes.Document;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
-
 import java.util.List;
 import java.util.Map;
 

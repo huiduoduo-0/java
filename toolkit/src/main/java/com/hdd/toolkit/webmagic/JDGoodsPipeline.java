@@ -8,7 +8,6 @@ import redis.clients.jedis.Jedis;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
-
 import javax.annotation.Resource;
 
 
