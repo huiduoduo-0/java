@@ -1,5 +1,6 @@
 package com.hdd.toolkit.service.impl;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.hdd.toolkit.dao.UserMapper;
 import com.hdd.toolkit.model.StatusResult;
 import com.hdd.toolkit.model.User;
@@ -13,9 +14,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -40,9 +39,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public StatusResult<Map> repeatByUserName(String userName, String id) {
         //调用查询用户名重复的方法
-        User user = userMapper.repeatByUserName(userName);
+          User user=userMapper.repeatByUserName(userName);
         //进行用户名重复校验
-        if (user != null) {
+        if (user !=null) {
             //返回错误信息
             return new StatusResult<Map>(404, "用户名重复");
         } else {
@@ -88,7 +87,6 @@ public class UserServiceImpl implements UserService {
             return new StatusResult<Map>(200, "邮箱可用");
         }
     }
-
 
     /**
      * 注册用户的方法的业务实现方法
@@ -166,7 +164,7 @@ public class UserServiceImpl implements UserService {
             //生成token
             String token = JwtUtil.getToken(payload);
             map.put("token", token);
-            //存入redis
+            //将token存入redis
             Jedis jedis = JedisPoolUtil.getJedis();
             jedis.setex("token", 60 * 60 * 24 * 7, token);
             //关闭资源
@@ -227,8 +225,11 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public StatusResult selectByPrimaryKey(Map<String, Object> map) {
+        //获取token里的用户id
+        DecodedJWT jwt = JwtUtil.getTokenInfo((String) map.get("token"));
+        String userId = jwt.getClaim("id").asString();
         //调用mapper的根据id查询用户的方法
-        User user = userMapper.selectByPrimaryKey(Long.valueOf(String.valueOf(map.get("id"))).longValue());
+        User user = userMapper.selectByPrimaryKey(Long.valueOf(String.valueOf(userId)).longValue());
         if (user == null) {
             return new StatusResult<Map>(404, "修改失败");
         } else {
@@ -249,8 +250,11 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public StatusResult selectUserAndAccount(Map<String, Object> map) {
+        //获取token里的用户id
+        DecodedJWT jwt = JwtUtil.getTokenInfo((String) map.get("token"));
+        String userId = jwt.getClaim("id").asString();
         //调用userMapper里的查询的方法
-        List<User> userList = userMapper.selectUserAndAccount((String) map.get("id"));
+        List<User> userList = userMapper.selectUserAndAccount(userId);
         if (userList == null) {
             return new StatusResult<Map>(404, "跳转个人中心失败");
         } else {
@@ -269,8 +273,11 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public StatusResult doUpdateUserCenter(Map<String, Object> map) {
+        //获取token里的用户id
+        DecodedJWT jwt = JwtUtil.getTokenInfo((String) map.get("token"));
+        String userId = jwt.getClaim("id").asString();
         //根据页面传来的id查询出该用户
-        User user = userMapper.selectByPrimaryKey(Long.valueOf(String.valueOf(map.get("id"))).longValue());
+        User user = userMapper.selectByPrimaryKey(Long.valueOf(String.valueOf(userId)).longValue());
         //将页面传递来的用户名set到user
         user.setUserName((String) map.get("userName"));
         user.setMobile((String) map.get("mobile"));

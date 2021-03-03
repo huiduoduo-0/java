@@ -3,9 +3,7 @@ package com.hdd.toolkit.controller;
 import com.hdd.toolkit.model.StatusResult;
 import com.hdd.toolkit.service.UserService;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 
@@ -67,7 +65,6 @@ public class UserController {
     @PostMapping(value = "doRegister")
     public StatusResult doRegister(@RequestBody Map<String, String> map) {
         //调用执行注册的service的方法
-        System.out.println("map=====" + map);
         return userService.doRegister(map);
     }
     /**
@@ -79,7 +76,6 @@ public class UserController {
      */
     @PostMapping(value = "doLogin")
     public StatusResult doLogin(@RequestBody Map<String, Object> map) {
-        System.out.println(map);
         //调用执行登录的service的方法
         return userService.selectByUserName(map);
     }
@@ -105,7 +101,6 @@ public class UserController {
      */
     @PostMapping(value = "selectByUserNameAndMobile")
     public StatusResult selectByUserNameAndMobile(@RequestBody Map<String, Object> map) {
-        System.out.println(map);
         //调用查询手机号和用户名的方法
         return userService.selectByUserNameAndMobile(map);
     }
