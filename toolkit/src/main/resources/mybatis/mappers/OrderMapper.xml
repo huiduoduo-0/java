@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hdd.toolkit.dao.OrderMapper">
+    <resultMap id="BaseResultMap" type="com.hdd.toolkit.model.Order">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="goods_id" jdbcType="BIGINT" property="goodsId"/>
+        <result column="count" jdbcType="BIGINT" property="count"/>
+        <result column="order_price" jdbcType="DECIMAL" property="orderPrice"/>
+        <result column="order_addtime" jdbcType="BIGINT" property="orderAddtime"/>
+        <result column="order_number" jdbcType="BIGINT" property="orderNumber"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, goods_id, `count`, order_price, order_addtime, order_number, `status`
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_order
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.hdd.toolkit.model.Order"
+            useGeneratedKeys="true">
+    insert into tb_order (goods_id, `count`, order_price, 
+      order_addtime, order_number, `status`
+      )
+    values (#{goodsId,jdbcType=BIGINT}, #{count,jdbcType=BIGINT}, #{orderPrice,jdbcType=DECIMAL}, 
+      #{orderAddtime,jdbcType=BIGINT}, #{orderNumber,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.hdd.toolkit.model.Order"
+            useGeneratedKeys="true">
+        insert into tb_order
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+                goods_id,
+            </if>
+            <if test="count != null">
+                `count`,
+            </if>
+            <if test="orderPrice != null">
+                order_price,
+            </if>
+            <if test="orderAddtime != null">
+                order_addtime,
+            </if>
+            <if test="orderNumber != null">
+                order_number,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodsId != null">
+                #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="count != null">
+                #{count,jdbcType=BIGINT},
+            </if>
+            <if test="orderPrice != null">
+                #{orderPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="orderAddtime != null">
+                #{orderAddtime,jdbcType=BIGINT},
+            </if>
+            <if test="orderNumber != null">
+                #{orderNumber,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.hdd.toolkit.model.Order">
+        update tb_order
+        <set>
+            <if test="goodsId != null">
+                goods_id = #{goodsId,jdbcType=BIGINT},
+            </if>
+            <if test="count != null">
+                `count` = #{count,jdbcType=BIGINT},
+            </if>
+            <if test="orderPrice != null">
+                order_price = #{orderPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="orderAddtime != null">
+                order_addtime = #{orderAddtime,jdbcType=BIGINT},
+            </if>
+            <if test="orderNumber != null">
+                order_number = #{orderNumber,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.hdd.toolkit.model.Order">
+    update tb_order
+    set goods_id = #{goodsId,jdbcType=BIGINT},
+      `count` = #{count,jdbcType=BIGINT},
+      order_price = #{orderPrice,jdbcType=DECIMAL},
+      order_addtime = #{orderAddtime,jdbcType=BIGINT},
+      order_number = #{orderNumber,jdbcType=BIGINT},
+      `status` = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
