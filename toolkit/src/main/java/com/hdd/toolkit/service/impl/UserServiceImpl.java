@@ -151,6 +151,7 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.repeatByUserName((String) map.get("userName"));
         //从session中取出验证码
         String code = (String) session.getAttribute(RandomValidateCode.RANDOMCODEKEY);
+        System.out.println("验证码code======="+code);
         //校验验证码
         if (!code.equalsIgnoreCase((String) map.get("code"))) {
             return new StatusResult<Map>(404, "验证码错误");
