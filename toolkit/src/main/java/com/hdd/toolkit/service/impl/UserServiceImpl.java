@@ -227,7 +227,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public StatusResult selectByPrimaryKey(Map<String, Object> map, HttpServletRequest request) {
         //从页面传来的表头中获取token
-        String token=request.getHeader("token");
+        String token=request.getHeader("Authorization");
         System.out.println("前台传来的token============"+token);
         //获取token里的用户id
         DecodedJWT jwt = JwtUtil.getTokenInfo("token");
@@ -255,7 +255,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public StatusResult selectUserAndAccount(Map<String, Object> map, HttpServletRequest request) {
         //从页面传来的表头中获取token
-        String token=request.getHeader("token");
+        String token=request.getHeader("Authorization");
         System.out.println("前台传来的token============"+token);
         //获取token里的用户id
         DecodedJWT jwt = JwtUtil.getTokenInfo("token");
@@ -281,7 +281,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public StatusResult doUpdateUserCenter(Map<String, Object> map, HttpServletRequest request) {
         //从页面传来的表头中获取token
-        String token=request.getHeader("token");
+        String token=request.getHeader("Authorization");
         System.out.println("前台传来的token============"+token);
         //获取token里的用户id
         DecodedJWT jwt = JwtUtil.getTokenInfo("token");

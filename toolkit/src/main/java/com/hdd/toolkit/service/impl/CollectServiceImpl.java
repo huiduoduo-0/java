@@ -30,7 +30,7 @@ public class CollectServiceImpl implements CollectService {
     @Override
     public StatusResult findCollectByGoodsId(Map<String, Object> map, HttpServletRequest request) {
         //从页面传来的表头中获取token
-        String token=request.getHeader("token");
+        String token=request.getHeader("Authorization");
         System.out.println("前台传来的token============"+token);
         //获取token的用户id
         DecodedJWT jwt = JwtUtil.getTokenInfo("token");
@@ -80,7 +80,7 @@ public class CollectServiceImpl implements CollectService {
     @Override
     public StatusResult selectAllCollectByUserId(Map<String, Object> map, HttpServletRequest request) {
         //从页面传来的表头中获取token
-        String token=request.getHeader("token");
+        String token=request.getHeader("Authorization");
         System.out.println("前台传来的token============"+token);
         //获取token的用户id
         DecodedJWT jwt = JwtUtil.getTokenInfo("token");

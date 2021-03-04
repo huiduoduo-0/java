@@ -117,6 +117,8 @@ public class UserController {
      */
     @PostMapping(value = "forgetUserPassword")
     public StatusResult forgetUserPassword(@RequestBody Map<String, Object> map, HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        System.out.println("接收的token============"+token);
         //调用service的根据id查询用户的业务逻辑层的方法
         return userService.selectByPrimaryKey(map,request);
     }
@@ -128,6 +130,8 @@ public class UserController {
      */
     @PostMapping(value = "userCenter")
     public StatusResult userCenter(@RequestBody Map<String, Object> map, HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        System.out.println("接收的token============"+token);
         //调用个人中心的service的方法
         return userService.selectUserAndAccount(map,request);
     }
@@ -139,6 +143,8 @@ public class UserController {
      */
     @PostMapping(value = "updateUserCenter")
     public StatusResult updateUserCenter(@RequestBody Map<String, Object> map, HttpServletRequest request){
+        String token = request.getHeader("Authorization");
+        System.out.println("接收的token============"+token);
         //调用修改个人中心的service的方法
         return userService.doUpdateUserCenter(map,request);
     }
