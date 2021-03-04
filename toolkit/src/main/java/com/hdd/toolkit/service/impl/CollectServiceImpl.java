@@ -10,6 +10,7 @@ import com.hdd.toolkit.utils.JwtUtil;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -27,9 +28,12 @@ public class CollectServiceImpl implements CollectService {
      * @return
      */
     @Override
-    public StatusResult findCollectByGoodsId(Map<String, Object> map) {
+    public StatusResult findCollectByGoodsId(Map<String, Object> map, HttpServletRequest request) {
+        //从页面传来的表头中获取token
+        String token=request.getHeader("token");
+        System.out.println("前台传来的token============"+token);
         //获取token的用户id
-        DecodedJWT jwt = JwtUtil.getTokenInfo((String) map.get("token"));
+        DecodedJWT jwt = JwtUtil.getTokenInfo("token");
         String userId = jwt.getClaim("id").asString();
         //调用查询我的收藏是否存在此商品的方法
         Collect collect = collectMapper.findCollectByGoodsId(userId, (String) map.get("goodsId"));
@@ -71,14 +75,15 @@ public class CollectServiceImpl implements CollectService {
      * 根据用户id查询该用户的所有的收藏的商品信息的业务实现方法
      *
      * @param map
-     * 、
-     * 
      * @return
      */
     @Override
-    public StatusResult selectAllCollectByUserId(Map<String, Object> map) {
+    public StatusResult selectAllCollectByUserId(Map<String, Object> map, HttpServletRequest request) {
+        //从页面传来的表头中获取token
+        String token=request.getHeader("token");
+        System.out.println("前台传来的token============"+token);
         //获取token的用户id
-        DecodedJWT jwt = JwtUtil.getTokenInfo((String) map.get("token"));
+        DecodedJWT jwt = JwtUtil.getTokenInfo("token");
         String userId = jwt.getClaim("id").asString();
         //调用根据用户id查询我的收藏方法
         List<Collect> listCollect = collectMapper.selectAllCollectByUserId(userId);

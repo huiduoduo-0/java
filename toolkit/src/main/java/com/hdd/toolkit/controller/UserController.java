@@ -2,8 +2,10 @@ package com.hdd.toolkit.controller;
 
 import com.hdd.toolkit.model.StatusResult;
 import com.hdd.toolkit.service.UserService;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 
@@ -17,6 +19,8 @@ public class UserController {
 
     @Resource
     UserService userService;
+
+
 
 
     /**
@@ -112,9 +116,9 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "forgetUserPassword")
-    public StatusResult forgetUserPassword(@RequestBody Map<String, Object> map) {
+    public StatusResult forgetUserPassword(@RequestBody Map<String, Object> map, HttpServletRequest request) {
         //调用service的根据id查询用户的业务逻辑层的方法
-        return userService.selectByPrimaryKey(map);
+        return userService.selectByPrimaryKey(map,request);
     }
 
     /**
@@ -123,9 +127,9 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "userCenter")
-    public StatusResult userCenter(@RequestBody Map<String, Object> map) {
+    public StatusResult userCenter(@RequestBody Map<String, Object> map, HttpServletRequest request) {
         //调用个人中心的service的方法
-        return userService.selectUserAndAccount(map);
+        return userService.selectUserAndAccount(map,request);
     }
 
     /**
@@ -134,8 +138,8 @@ public class UserController {
      * @return
      */
     @PostMapping(value = "updateUserCenter")
-    public StatusResult updateUserCenter(@RequestBody Map<String, Object> map){
+    public StatusResult updateUserCenter(@RequestBody Map<String, Object> map, HttpServletRequest request){
         //调用修改个人中心的service的方法
-        return userService.doUpdateUserCenter(map);
+        return userService.doUpdateUserCenter(map,request);
     }
 }

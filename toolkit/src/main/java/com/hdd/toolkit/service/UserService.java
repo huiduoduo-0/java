@@ -4,6 +4,7 @@ import com.hdd.toolkit.model.StatusResult;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 
@@ -69,14 +70,14 @@ public interface UserService {
      * @param map
      * @return
      */
-    StatusResult selectByPrimaryKey(Map<String, Object> map);
+    StatusResult selectByPrimaryKey(Map<String, Object> map, HttpServletRequest request);
 
     /**
      * 查询用户表关联账户表的业务逻辑层
      *
      * @return
      */
-    StatusResult selectUserAndAccount(Map<String, Object> map);
+    StatusResult selectUserAndAccount(Map<String, Object> map, HttpServletRequest request);
 
     /**
      * 执行修改个人信息的业务逻辑层
@@ -84,7 +85,7 @@ public interface UserService {
      * @param map
      * @return
      */
-    StatusResult doUpdateUserCenter(Map<String, Object> map);
+    StatusResult doUpdateUserCenter(Map<String, Object> map, HttpServletRequest request);
 
 
 }

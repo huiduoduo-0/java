@@ -15,6 +15,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -224,9 +225,12 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public StatusResult selectByPrimaryKey(Map<String, Object> map) {
+    public StatusResult selectByPrimaryKey(Map<String, Object> map, HttpServletRequest request) {
+        //从页面传来的表头中获取token
+        String token=request.getHeader("token");
+        System.out.println("前台传来的token============"+token);
         //获取token里的用户id
-        DecodedJWT jwt = JwtUtil.getTokenInfo((String) map.get("token"));
+        DecodedJWT jwt = JwtUtil.getTokenInfo("token");
         String userId = jwt.getClaim("id").asString();
         //调用mapper的根据id查询用户的方法
         User user = userMapper.selectByPrimaryKey(Long.valueOf(String.valueOf(userId)).longValue());
@@ -249,9 +253,12 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public StatusResult selectUserAndAccount(Map<String, Object> map) {
+    public StatusResult selectUserAndAccount(Map<String, Object> map, HttpServletRequest request) {
+        //从页面传来的表头中获取token
+        String token=request.getHeader("token");
+        System.out.println("前台传来的token============"+token);
         //获取token里的用户id
-        DecodedJWT jwt = JwtUtil.getTokenInfo((String) map.get("token"));
+        DecodedJWT jwt = JwtUtil.getTokenInfo("token");
         String userId = jwt.getClaim("id").asString();
         //调用userMapper里的查询的方法
         List<User> userList = userMapper.selectUserAndAccount(userId);
@@ -272,9 +279,12 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public StatusResult doUpdateUserCenter(Map<String, Object> map) {
+    public StatusResult doUpdateUserCenter(Map<String, Object> map, HttpServletRequest request) {
+        //从页面传来的表头中获取token
+        String token=request.getHeader("token");
+        System.out.println("前台传来的token============"+token);
         //获取token里的用户id
-        DecodedJWT jwt = JwtUtil.getTokenInfo((String) map.get("token"));
+        DecodedJWT jwt = JwtUtil.getTokenInfo("token");
         String userId = jwt.getClaim("id").asString();
         //根据页面传来的id查询出该用户
         User user = userMapper.selectByPrimaryKey(Long.valueOf(String.valueOf(userId)).longValue());
