@@ -22,7 +22,7 @@ public class CollectController {
      * @return
      */
     @GetMapping(value = "/repeatGoods")
-    public StatusResult repeatGoods(@RequestBody Map<String, Object> map, HttpServletRequest request) {
+    public StatusResult repeatGoods(@RequestParam Map<String, Object> map,@RequestParam HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         System.out.println("接收的token============"+token);
         //调用收藏的service的,根据商品id查询收藏表是否存在此商品
@@ -32,15 +32,15 @@ public class CollectController {
     /**
      * 根据用户id查询该用户的所有的收藏的商品信息的方法
      *
-     * @param map
+     * @param
      * @return
      */
     @GetMapping(value = "/selectAllCollect")
-    public StatusResult selectAllCollect(@RequestBody Map<String, Object> map, HttpServletRequest request) {
+    public StatusResult selectAllCollect(@RequestParam HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         System.out.println("接收的token============"+token);
         //调用查询该用户的所有收藏商品的方法
-        return collectService.selectAllCollectByUserId(map,request);
+        return collectService.selectAllCollectByUserId(request);
     }
 
     /**
@@ -50,7 +50,7 @@ public class CollectController {
      * @return
      */
     @GetMapping(value = "/deleteCollect")
-    public StatusResult deleteCollect(@RequestBody Map<String, Object> map) {
+    public StatusResult deleteCollect(@RequestParam Map<String, Object> map) {
         //调用删除的方法
         return collectService.deleteCollect(map);
     }

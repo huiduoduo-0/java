@@ -12,6 +12,7 @@ import redis.clients.jedis.Jedis;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -74,11 +75,13 @@ public class CollectServiceImpl implements CollectService {
     /**
      * 根据用户id查询该用户的所有的收藏的商品信息的业务实现方法
      *
-     * @param map
+     * @param
      * @return
      */
     @Override
-    public StatusResult selectAllCollectByUserId(Map<String, Object> map, HttpServletRequest request) {
+    public StatusResult selectAllCollectByUserId( HttpServletRequest request) {
+        //创建一个map
+        Map<String,Object> map=new HashMap<>();
         //从页面传来的表头中获取token
         String token=request.getHeader("Authorization");
         System.out.println("前台传来的token============"+token);

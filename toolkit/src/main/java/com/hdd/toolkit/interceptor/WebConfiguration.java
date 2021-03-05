@@ -12,9 +12,11 @@ public class WebConfiguration implements WebMvcConfigurer{
 
 	@Autowired
 	WebInterceptor webInterceptor;
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(webInterceptor).addPathPatterns("/**");
+												//拦截的请求  			//放行的请求
+		registry.addInterceptor(webInterceptor).addPathPatterns("/**").excludePathPatterns("/user/**");
 	}
 	
 	

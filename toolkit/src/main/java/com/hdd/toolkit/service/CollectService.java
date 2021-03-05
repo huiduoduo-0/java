@@ -16,11 +16,10 @@ public interface CollectService {
 
     /**
      * 根据用户id查询该用户的所有的收藏的商品信息的业务逻辑层
-     *
-     * @param map
+     * @param request
      * @return
      */
-    StatusResult selectAllCollectByUserId(Map<String, Object> map, HttpServletRequest request);
+    StatusResult selectAllCollectByUserId( HttpServletRequest request);
 
     /**
      * 删除我的收藏里商品的方法的业务逻辑层
