@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hdd.toolkit.dao.CollectMapper">
+  <resultMap id="BaseResultMap" type="com.hdd.toolkit.model.Collect">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="goods_id" jdbcType="BIGINT" property="goodsId" />
+    <result column="addtime" jdbcType="BIGINT" property="addtime" />
+    <result column="color" jdbcType="VARCHAR" property="color" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="introduce" jdbcType="VARCHAR" property="introduce" />
+    <result column="goodsPictureUrl" jdbcType="VARCHAR" property="goodspictureurl" />
+    <result column="smallphotoUrl" jdbcType="VARCHAR" property="smallphotourl" />
+    <result column="goodsname" jdbcType="VARCHAR" property="goodsname" />
+    <result column="specv" jdbcType="VARCHAR" property="specv" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, goods_id, addtime, color, price, introduce, goodsPictureUrl, smallphotoUrl, 
+    goodsname, specv, title
+  </sql>
+
+  <!-- 查询我的收藏里是否存在此商品-->
+  <select id="findCollectByGoodsId" parameterType="java.lang.Long" resultType="com.hdd.toolkit.model.Collect">
+    select
+    <include refid="Base_Column_List"/>
+    from tb_collect
+    where goods_id=#{goodsId}
+    and user_id=#{userId}
+  </select>
+
+  <!--根据用户id查询该用户的所有的收藏的商品信息-->
+  <select id="selectAllCollectByUserId" parameterType="java.lang.Long" resultType="com.hdd.toolkit.model.Collect">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from tb_collect
+    where user_id=#{userId}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_collect
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_collect
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.hdd.toolkit.model.Collect" useGeneratedKeys="true">
+    insert into tb_collect (user_id, goods_id, addtime, 
+      color, price, introduce, 
+      goodsPictureUrl, smallphotoUrl, goodsname, 
+      specv, title)
+    values (#{userId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{addtime,jdbcType=BIGINT}, 
+      #{color,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, #{introduce,jdbcType=VARCHAR}, 
+      #{goodspictureurl,jdbcType=VARCHAR}, #{smallphotourl,jdbcType=VARCHAR}, #{goodsname,jdbcType=VARCHAR}, 
+      #{specv,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.hdd.toolkit.model.Collect" useGeneratedKeys="true">
+    insert into tb_collect
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="addtime != null">
+        addtime,
+      </if>
+      <if test="color != null">
+        color,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="introduce != null">
+        introduce,
+      </if>
+      <if test="goodspictureurl != null">
+        goodsPictureUrl,
+      </if>
+      <if test="smallphotourl != null">
+        smallphotoUrl,
+      </if>
+      <if test="goodsname != null">
+        goodsname,
+      </if>
+      <if test="specv != null">
+        specv,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null">
+        #{addtime,jdbcType=BIGINT},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="introduce != null">
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="goodspictureurl != null">
+        #{goodspictureurl,jdbcType=VARCHAR},
+      </if>
+      <if test="smallphotourl != null">
+        #{smallphotourl,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null">
+        #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="specv != null">
+        #{specv,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hdd.toolkit.model.Collect">
+    update tb_collect
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=BIGINT},
+      </if>
+      <if test="color != null">
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="introduce != null">
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="goodspictureurl != null">
+        goodsPictureUrl = #{goodspictureurl,jdbcType=VARCHAR},
+      </if>
+      <if test="smallphotourl != null">
+        smallphotoUrl = #{smallphotourl,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsname != null">
+        goodsname = #{goodsname,jdbcType=VARCHAR},
+      </if>
+      <if test="specv != null">
+        specv = #{specv,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hdd.toolkit.model.Collect">
+    update tb_collect
+    set user_id = #{userId,jdbcType=BIGINT},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      addtime = #{addtime,jdbcType=BIGINT},
+      color = #{color,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      goodsPictureUrl = #{goodspictureurl,jdbcType=VARCHAR},
+      smallphotoUrl = #{smallphotourl,jdbcType=VARCHAR},
+      goodsname = #{goodsname,jdbcType=VARCHAR},
+      specv = #{specv,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
