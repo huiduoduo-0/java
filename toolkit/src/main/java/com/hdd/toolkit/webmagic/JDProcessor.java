@@ -4,15 +4,21 @@ import com.alibaba.fastjson.JSONObject;
 import com.hdd.toolkit.model.Goods;
 import com.hdd.toolkit.utils.HttpClientUtil;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class JDProcessor implements PageProcessor {
 
     private long sid;
+
+    List<Goods> goodsList = new ArrayList<>();
 
     private Site site = Site.me()
             .setTimeOut(5000)//超时时间 5秒
@@ -31,8 +37,8 @@ public class JDProcessor implements PageProcessor {
 
         if (page.getHtml().$("#J_goodsList").get() != null) {
             //列表页
-            List<String> all = page.getHtml().$("#J_goodsList .gl-item").$(".p-img a").links().all();
-            page.addTargetRequests(all);
+            List<String> JdList = page.getHtml().$("#J_goodsList .gl-item").$(".p-img a").links().all();
+            page.addTargetRequests(JdList);
         } else {
             //详情页
             Document dom = page.getHtml().getDocument();
@@ -43,11 +49,56 @@ public class JDProcessor implements PageProcessor {
             //获取商品路径
             String url = page.getUrl().get();
             //获取商品介绍
-            String intro = dom.select(".p-parameter-list li").text();
-            System.out.println("intro = " + intro);
-            //获取规格值
-            String spec = dom.select(".Ptable").text();
-            System.out.println("spec--------- = " + spec);
+            String intro = dom.select(".p-parameter-list li").text().trim();
+            //商品小图片
+            Elements imgsUrl = dom.select(".spec-items li img[src]");
+            String s = "";
+            List<String> imgsList = new ArrayList<>();//定义集合存储商品小图片
+            for (Element e: imgsUrl){
+                //将取到的标签转换string类型
+                String imgs = String.valueOf(e);
+                //截取字符串中的小图片路径
+                s = imgs.substring(imgs.indexOf("src")+5,imgs.indexOf("jpg")+3);
+                //截取后的小图片存入集合
+                imgsList.add(s);
+//                System.out.println("小图片   ====="+ s);
+            }
+            //颜色小图片
+            Elements colorImgsUrl = dom.select("#choose-attr-1 a img[src]");
+            String c = "";
+            for (Element e : colorImgsUrl){
+                //将取到的标签转换string类型
+                String imgs = String.valueOf(e);
+                //截取字符串中的小图片路径
+                c = imgs.substring(imgs.indexOf("src")+5,imgs.indexOf("jpg")+3);
+                //截取后的小图片存入集合
+                imgsList.add(c);
+//                System.out.println("颜色小图片  ==== "+ c);
+            }
+            System.out.println("  小图片集合---------"+imgsList);
+
+            //商品颜色
+            List<String> collorList = new ArrayList<>();//颜色集合
+            Elements elements = dom.select("#choose-attr-1 a i");
+            for (Element e : elements){
+                String color = e.text();
+                collorList.add(color);
+//                System.out.println("  商品 颜色 +++++  "+color);
+            }
+            System.out.println("  颜色集合————————————"+collorList);
+
+            //商品规格
+            List<String> specList = new ArrayList<>();//规格集合
+            Elements element1 = dom.select("#choose-attr-2 a");
+            for (Element e : element1){
+                String spec = e.text();
+                specList.add(spec);
+            }
+            System.out.println("  规格集合 *********"+specList);
+
+            //获取商品参数
+            String parameter = dom.select(".Ptable").text().trim();
+//            System.out.println("  参数   。。。。。"+parameter);
             //获取商品的价格
             String skuId = url.substring(url.lastIndexOf("/") + 1, url.indexOf(".html"));
             //调用工具类 doget方法获取json数据
@@ -64,17 +115,25 @@ public class JDProcessor implements PageProcessor {
             goods.setImgUrl(imgUrl);
             goods.setPrice((long) price);
             goods.setIntroduce(intro);
-            goods.setSpec(spec);
+            goods.setSpec(parameter);
             goods.setUrl(url);
             goods.setSid(sid);
             page.putField("goods", goods);
-            System.out.println("goods  +++++  ----- " + goods);
+//            System.out.println("goods  +++++  ----- " + goods);
+            goodsList.add(goods);
+            System.out.println(goodsList);
+
+            //将京东商品对象存入session
+//            session.setAttribute(jdgoods,goods);
+
         }
     }
 
-       @Override
+    @Override
     public Site getSite() {
         return site;
     }
 
 }
+
+
