@@ -9,7 +9,6 @@ import org.jsoup.select.Elements;
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.processor.PageProcessor;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

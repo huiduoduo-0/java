@@ -1,9 +1,11 @@
 package com.hdd.toolkit.dao;
 
 import com.hdd.toolkit.model.Collect;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
+@Mapper
 public interface CollectMapper {
     /**
      * 根据主键删除收藏

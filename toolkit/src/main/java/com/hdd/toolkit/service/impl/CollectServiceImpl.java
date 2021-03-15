@@ -104,7 +104,7 @@ public class CollectServiceImpl implements CollectService {
     @Override
     public StatusResult deleteCollect(Map<String, Object> map) {
         //调用根据商品id删除我的收藏里商品的方法
-        int count = collectMapper.deleteByPrimaryKey((long) map.get("goodsId"));
+        int count = collectMapper.deleteByPrimaryKey((long) map.get("goodsId·"));
         //进行删除成功校验
         if (count == 0) {
             return new StatusResult<Map>(200, "删除成功");

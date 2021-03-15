@@ -22,14 +22,14 @@ public class WebInterceptor implements HandlerInterceptor {
      */
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        //从表头中提出token
+        //从前台传来的表头中提出token
         String tokenHeader = request.getHeader("Authorization");
-        //如果页面的表头没有token,就重新登录
+        //如果页面传来的表头没有token,就重新登录
         if (tokenHeader == null || ("").equals(tokenHeader)) {
-            response.sendError(401,"表头没有token,重新登录");
+            response.sendError(401,"表头没有携带token,重新登录");
             return false; //拦截
         }
-        //token失效拦截
+        //token的失效拦截
         DecodedJWT jwt = JwtUtil.getTokenInfo("tokenHeader");
         //获取token失效时间
         Date tokenInvalidTime = jwt.getExpiresAt();
