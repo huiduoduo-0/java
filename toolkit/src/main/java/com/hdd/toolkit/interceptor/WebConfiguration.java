@@ -14,7 +14,7 @@ public class WebConfiguration implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 												//拦截的请求  			//放行的请求
-		registry.addInterceptor(webInterceptor).addPathPatterns("/**").excludePathPatterns("/user/**");
+		registry.addInterceptor(webInterceptor).addPathPatterns("/**").excludePathPatterns("/user/**","/code/**");
 	}
 
 	//
