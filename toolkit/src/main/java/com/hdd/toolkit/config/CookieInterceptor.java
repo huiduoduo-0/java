@@ -2,7 +2,6 @@ package com.hdd.toolkit.config;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.hdd.toolkit.utils.JwtUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
