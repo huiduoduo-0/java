@@ -20,9 +20,6 @@ public class UserController {
     @Resource
     UserService userService;
 
-
-
-
     /**
      * 用户名重复的方法
      *
